@@ -6,6 +6,13 @@ CONFIGURAR A EQUIPE PARA USAR A BRANCH DEVELOP
    - Clonar o repositório:
      git clone https://github.com/seu-usuario/meu-projeto.git
 
+   - Verificar as branches existentes:
+     git branch -a
+
+   - Configurar nome e email do usuário:
+     git config --global user.name "Seu Nome"
+     git config --global user.email "seu.email@exemplo.com"
+
    - Trocar para a branch develop:
      git checkout develop
 
