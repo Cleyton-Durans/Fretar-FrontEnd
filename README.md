@@ -49,4 +49,3 @@
 - [ ] [Funcionalidade 3: Exemplo: "Compartilhamento de listas entre usuários"]
 - [ ] [Funcionalidade 4: Exemplo: "Notificações em tempo real"]
 - [ ] [Funcionalidade 5: Exemplo: "Integração com API de CEP para preenchimento automático"]
-
