@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <link rel="stylesheet" href="css/style.css">
+    <title>Cadastro - Frete Fácil</title>
+    
+</head>
+
+<body>
+
+    <h1>Criar conta</h1>
+
+    <p>Como você deseja utilizar nossa plataforma?</p>
+
+    <button type="button" id="botaoCliente">
+        👤 Sou cliente
+    </button>
+
+    <button type="button" id="botaoFreteiro">
+        🚚 Sou freteiro
+    </button>
+
+    <hr>
+
+    <!-- Formulário do cliente -->
+    <div id="formularioCliente">
+
+        <h2>Cadastro de Cliente</h2>
+
+<p id="mensagemCliente"></p>
+       <form id="formCliente">
+
+            <label for="nomeCliente">Nome completo:</label>
+            <input type="text" id="nomeCliente">
+
+            <br><br>
+
+            <label for="emailCliente">E-mail:</label>
+            <input type="email" id="emailCliente">
+
+            <br><br>
+
+            <label for="telefoneCliente">Telefone:</label>
+            <input type="tel" id="telefoneCliente">
+
+            <br><br>
+
+            <label for="senhaCliente">Senha:</label>
+            <input type="password" id="senhaCliente">
+
+            <br><br>
+
+            <label for="confirmarSenhaCliente">
+                Confirmar senha:
+            </label>
+
+            <input type="password" id="confirmarSenhaCliente">
+
+            <br><br>
+
+            <button type="submit">
+                Criar conta
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- Formulário do freteiro -->
+    <div id="formularioFreteiro">
+
+        <h2>Cadastro de Freteiro</h2>
+        <p id="mensagemFreteiro"></p>
+
+      <form id="formFreteiro">
+
+            <label for="nomeFreteiro">Nome completo:</label>
+            <input type="text" id="nomeFreteiro">
+
+            <br><br>
+
+            <label for="emailFreteiro">E-mail:</label>
+            <input type="email" id="emailFreteiro">
+
+            <br><br>
+
+            <label for="telefoneFreteiro">Telefone:</label>
+            <input type="tel" id="telefoneFreteiro">
+
+            <br><br>
+
+            <label for="senhaFreteiro">Senha:</label>
+            <input type="password" id="senhaFreteiro">
+
+            <br><br>
+
+            <label for="confirmarSenhaFreteiro">
+                Confirmar senha:
+            </label>
+
+            <input type="password" id="confirmarSenhaFreteiro">
+
+            <br><br>
+
+            <h3>Informações do veículo</h3>
+
+            <label for="tipoVeiculo">Tipo de veículo:</label>
+
+            <select id="tipoVeiculo">
+
+                <option value="">
+                    Selecione
+                </option>
+
+                <option value="moto">
+                    Moto
+                </option>
+
+                <option value="carro">
+                    Carro
+                </option>
+
+                <option value="utilitario">
+                    Utilitário
+                </option>
+
+                <option value="caminhao">
+                    Caminhão
+                </option>
+
+                <option value="van">
+                    Van
+                </option>
+
+            </select>
+
+            <br><br>
+
+            <label for="placa">Placa:</label>
+            <input type="text" id="placa">
+
+            <br><br>
+
+            <button type="submit">
+                Criar conta
+            </button>
+
+        </form>
+
+    </div>
+
+    <script src="js/cadastro.js"></script>
+
+</body>
+
+</html>
