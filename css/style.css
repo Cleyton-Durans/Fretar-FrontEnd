@@ -1,6 +1,53 @@
-/* =========================
-   CONFIGURAÇÕES GERAIS
-========================= */
+/* =====================================================
+   FRETAR - CSS GLOBAL
+   Um único CSS para todas as páginas do projeto
+===================================================== */
+
+
+/* =====================================================
+   1. VARIÁVEIS DO PROJETO
+===================================================== */
+
+:root {
+    /* Cores principais */
+    --verde: #64d21f;
+    --verde-hover: #54b919;
+    --verde-escuro: #3d9915;
+
+    /* Fundos */
+    --fundo: #050b10;
+    --fundo-secundario: #080f15;
+    --fundo-card: #10171e;
+    --fundo-input: #171e25;
+
+    /* Textos */
+    --branco: #ffffff;
+    --texto: #f0f1f2;
+    --cinza: #aeb5bd;
+    --cinza-escuro: #7e8790;
+
+    /* Bordas */
+    --borda: #29323b;
+    --borda-clara: #3b454e;
+
+    /* Alertas */
+    --erro: #ff6b61;
+    --erro-fundo: rgba(217, 45, 32, 0.08);
+    --erro-borda: #d92d20;
+
+    /* Tamanhos */
+    --raio-pequeno: 6px;
+    --raio: 8px;
+    --raio-grande: 12px;
+
+    /* Sombras */
+    --sombra-card: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =====================================================
+   2. RESET GLOBAL
+===================================================== */
 
 * {
     margin: 0;
@@ -8,162 +55,344 @@
     box-sizing: border-box;
 }
 
+
+/* =====================================================
+   3. CONFIGURAÇÃO GLOBAL DO BODY
+===================================================== */
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    color: #222;
+    font-family: Arial, Helvetica, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(65, 170, 20, 0.08),
+            transparent 35%
+        ),
+        var(--fundo);
+
+    color: var(--texto);
+
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
 }
 
 
-/* =========================
-   CONTAINER PRINCIPAL
-========================= */
+/* =====================================================
+   4. LINKS GLOBAIS
+===================================================== */
 
-body > h1,
-body > p,
-body > button,
-body > hr,
-#formularioCliente,
-#formularioFreteiro {
-    max-width: 500px;
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
 
-/* =========================
-   TÍTULO
-========================= */
+/* =====================================================
+   5. BOTÃO PRINCIPAL GLOBAL
+===================================================== */
 
-h1 {
-    position: absolute;
-    top: 50px;
-    font-size: 32px;
-    color: #111;
-}
+.btn-principal {
+    width: 100%;
 
+    min-height: 46px;
 
-/* =========================
-   TEXTO
-========================= */
-
-body > p {
-    position: absolute;
-    top: 100px;
-    color: #666;
-}
-
-
-/* =========================
-   BOTÕES DE ESCOLHA
-========================= */
-
-body > button {
-    width: 220px;
-    padding: 15px;
-    margin: 10px;
+    padding: 12px 20px;
 
     border: none;
-    border-radius: 10px;
+    border-radius: var(--raio-pequeno);
 
-    background: #111;
-    color: white;
+    background: var(--verde);
+    color: var(--branco);
 
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 600;
 
     cursor: pointer;
 
-    transition: 0.3s;
+    transition: 0.2s;
 }
 
-body > button:hover {
-    background: #2f9e44;
-    transform: translateY(-2px);
-}
+.btn-principal:hover {
+    background: var(--verde-hover);
 
-
-/* =========================
-   LINHA
-========================= */
-
-hr {
-    display: none;
+    transform: translateY(-1px);
 }
 
 
-/* =========================
-   FORMULÁRIOS
-========================= */
+/* =====================================================
+   6. BOTÃO SECUNDÁRIO GLOBAL
+===================================================== */
 
-#formularioCliente,
-#formularioFreteiro {
+.btn-secundario {
+    min-height: 44px;
 
+    padding: 10px 24px;
+
+    border: 1px solid var(--borda-clara);
+    border-radius: var(--raio-pequeno);
+
+    background: transparent;
+    color: var(--branco);
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-secundario:hover {
+    border-color: var(--verde);
+    color: var(--verde);
+}
+
+
+/* =====================================================
+   7. HEADER GLOBAL
+===================================================== */
+
+.header {
+    height: 90px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 48px;
+
+    border-bottom: 1px solid #202831;
+
+    background: var(--fundo);
+
+    gap: 30px;
+}
+
+
+/* LOGO */
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    min-width: 250px;
+
+    color: var(--branco);
+
+    font-size: 34px;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.logo-icone {
+    font-size: 32px;
+    font-style: normal;
+}
+
+
+/* MENU */
+
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 40px;
+
+    flex: 1;
+}
+
+.menu a {
+    color: #e5e7e9;
+
+    font-size: 15px;
+
+    transition: 0.2s;
+}
+
+.menu a:hover,
+.menu a.ativo {
+    color: var(--verde);
+}
+
+
+/* AÇÕES DO HEADER */
+
+.acoes-header {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+}
+
+
+/* BOTÃO ENTRAR */
+
+.btn-entrar {
+    padding: 12px 30px;
+
+    border: 1px solid #4a535c;
+    border-radius: var(--raio-pequeno);
+
+    color: var(--branco);
+
+    font-size: 15px;
+
+    transition: 0.2s;
+}
+
+.btn-entrar:hover {
+    border-color: var(--verde);
+    color: var(--verde);
+}
+
+
+/* BOTÃO CRIAR CONTA */
+
+.btn-criar {
+    padding: 12px 30px;
+
+    border-radius: var(--raio-pequeno);
+
+    background: var(--verde);
+    color: var(--branco);
+
+    font-size: 15px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.btn-criar:hover {
+    background: var(--verde-hover);
+}
+
+
+/* =====================================================
+   8. CONTAINER GLOBAL
+===================================================== */
+
+.container {
     width: 100%;
-    background: white;
+
+    max-width: 1470px;
+
+    margin: 0 auto;
+
+    padding: 0 30px;
+}
+
+
+/* =====================================================
+   9. CARD GLOBAL
+===================================================== */
+
+.card {
+    background:
+        linear-gradient(
+            145deg,
+            var(--fundo-card),
+            #0d141a
+        );
+
+    border: 1px solid var(--borda);
+
+    border-radius: var(--raio-grande);
 
     padding: 30px;
 
-    border-radius: 15px;
-
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-
-    margin-top: 250px;
+    box-shadow: var(--sombra-card);
 }
 
 
-/* =========================
-   TÍTULO DO FORMULÁRIO
-========================= */
+/* =====================================================
+   10. TÍTULOS GLOBAIS
+===================================================== */
 
-h2 {
-    margin-bottom: 25px;
-    color: #111;
+.titulo {
+    color: var(--branco);
+
+    font-size: 28px;
+
+    margin-bottom: 8px;
 }
 
-
-/* =========================
-   SUBTÍTULO
-========================= */
-
-h3 {
-    margin-top: 25px;
-    margin-bottom: 15px;
-}
-
-
-/* =========================
-   LABEL
-========================= */
-
-label {
-    display: block;
-    margin-bottom: 7px;
-
-    font-size: 14px;
-    font-weight: bold;
-    color: #444;
-}
-
-
-/* =========================
-   INPUTS
-========================= */
-
-input,
-select {
-
-    width: 100%;
-
-    padding: 13px;
-
-    border: 1px solid #d5d9dd;
-    border-radius: 8px;
+.subtitulo {
+    color: var(--cinza);
 
     font-size: 15px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =====================================================
+   11. FORMULÁRIOS GLOBAIS
+===================================================== */
+
+.formulario {
+    width: 100%;
+}
+
+
+/* LINHA */
+
+.linha {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+
+    margin-bottom: 18px;
+}
+
+
+/* CAMPO */
+
+.campo {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+/* LABEL */
+
+.campo label {
+    color: var(--texto);
+
+    font-size: 14px;
+}
+
+.campo label span {
+    color: var(--cinza-escuro);
+
+    font-weight: normal;
+}
+
+
+/* INPUT E SELECT */
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+
+    min-height: 43px;
+
+    padding: 10px 14px;
+
+    border: 1px solid #303943;
+    border-radius: var(--raio-pequeno);
+
+    background: var(--fundo-input);
+    color: var(--branco);
+
+    font-family: inherit;
+    font-size: 14px;
 
     outline: none;
 
@@ -171,75 +400,367 @@ select {
 }
 
 
-input:focus,
-select:focus {
+/* TEXTAREA */
 
-    border-color: #2f9e44;
+.campo textarea {
+    resize: vertical;
 
-    box-shadow: 0 0 0 3px rgba(47, 158, 68, 0.12);
+    min-height: 100px;
 }
 
 
-/* =========================
-   BOTÃO CRIAR CONTA
-========================= */
+/* PLACEHOLDER */
 
-form button {
+.campo input::placeholder,
+.campo textarea::placeholder {
+    color: var(--cinza-escuro);
+}
 
-    width: 100%;
 
-    margin-top: 20px;
+/* FOCO */
 
-    padding: 14px;
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    border-color: var(--verde);
 
-    border: none;
+    box-shadow:
+        0 0 0 2px rgba(100, 210, 31, 0.12);
+}
 
-    border-radius: 8px;
 
-    background: #2f9e44;
+/* =====================================================
+   12. ALERTAS GLOBAIS
+===================================================== */
 
-    color: white;
+.alerta {
+    padding: 12px 15px;
+
+    margin-bottom: 18px;
+
+    border-radius: var(--raio-pequeno);
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* ALERTA DE ERRO */
+
+.alerta-erro {
+    color: var(--erro);
+
+    background: var(--erro-fundo);
+
+    border: 1px solid rgba(217, 45, 32, 0.4);
+
+    border-left: 4px solid var(--erro-borda);
+}
+
+
+/* ALERTA DE SUCESSO */
+
+.alerta-sucesso {
+    color: var(--verde);
+
+    background: rgba(100, 210, 31, 0.08);
+
+    border: 1px solid rgba(100, 210, 31, 0.35);
+
+    border-left: 4px solid var(--verde);
+}
+
+
+/* =====================================================
+   13. PÁGINA DE CADASTRO
+===================================================== */
+
+.pagina {
+    width: calc(100% - 64px);
+
+    max-width: 1470px;
+
+    margin: 25px auto;
+
+    border: 1px solid var(--borda);
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    background: #070d12;
+
+    box-shadow:
+        0 0 50px rgba(0, 0, 0, 0.45);
+}
+
+
+/* CONTEÚDO DO CADASTRO */
+
+.conteudo {
+    display: grid;
+
+    grid-template-columns: 42% 58%;
+
+    min-height: 800px;
+}
+
+
+/* =====================================================
+   14. APRESENTAÇÃO DO CADASTRO
+===================================================== */
+
+.apresentacao {
+    position: relative;
+
+    padding: 65px 60px 40px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(4, 12, 17, 0.98),
+            rgba(4, 12, 17, 0.78)
+        );
+}
+
+
+/* TEXTO */
+
+.texto-apresentacao {
+    position: relative;
+
+    z-index: 3;
+
+    max-width: 470px;
+}
+
+
+/* DESTAQUE VERDE */
+
+.destaque {
+    color: var(--verde);
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* TÍTULO DO CADASTRO */
+
+.texto-apresentacao h1 {
+    margin-top: 25px;
+
+    color: var(--branco);
+
+    font-size: 52px;
+
+    line-height: 1.05;
+
+    letter-spacing: -1px;
+}
+
+.texto-apresentacao h1 span {
+    display: block;
+
+    color: var(--verde);
+}
+
+
+/* TEXTO */
+
+.texto-apresentacao > p {
+    max-width: 390px;
+
+    margin-top: 22px;
+
+    color: #c0c5ca;
+
+    font-size: 17px;
+
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   15. BENEFÍCIOS
+===================================================== */
+
+.beneficios {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 22px;
+
+    margin-top: 35px;
+}
+
+.beneficio {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+}
+
+.icone-beneficio {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--borda-clara);
+
+    border-radius: var(--raio);
+
+    background: rgba(0, 0, 0, 0.25);
+
+    color: var(--verde);
+
+    font-size: 24px;
+}
+
+.beneficio strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--branco);
 
     font-size: 16px;
+}
 
-    font-weight: bold;
+.beneficio span {
+    color: #9ea6ae;
 
-    cursor: pointer;
-
-    transition: 0.3s;
+    font-size: 13px;
 }
 
 
-form button:hover {
+/* =====================================================
+   16. IMAGEM DO CADASTRO
+===================================================== */
 
-    background: #237a35;
+.imagem-caminhao {
+    position: absolute;
 
-    transform: translateY(-2px);
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 390px;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(3, 10, 14, 0.2)
+        );
 }
 
 
-/* =========================
-   MENSAGENS
-========================= */
+/* =====================================================
+   17. ÁREA DO FORMULÁRIO
+===================================================== */
 
+.area-formulario {
+    padding: 28px;
+
+    background: var(--fundo-secundario);
+}
+
+
+/* =====================================================
+   18. FORMULÁRIO EM CARD
+===================================================== */
+
+.formulario-container {
+    min-height: 700px;
+
+    padding: 32px 30px;
+
+    border: 1px solid var(--borda);
+
+    border-radius: var(--raio-grande);
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--fundo-card),
+            #0d141a
+        );
+
+    box-shadow: var(--sombra-card);
+}
+
+
+/* =====================================================
+   19. TÍTULO DO FORMULÁRIO
+===================================================== */
+
+.titulo-formulario {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 28px;
+}
+
+.icone-titulo {
+    color: var(--verde);
+
+    font-size: 38px;
+}
+
+.titulo-formulario h2 {
+    margin-bottom: 5px;
+
+    color: var(--branco);
+
+    font-size: 24px;
+}
+
+.titulo-formulario p {
+    color: #9fa6ad;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   20. ALERTA DO CADASTRO
+===================================================== */
 
 #mensagemCliente,
 #mensagemFreteiro {
     display: none;
 
-    margin: 15px 0;
+    margin: 0 0 18px;
+
     padding: 12px 15px;
 
-    color: #b42318;
-    background-color: #fef3f2;
+    color: var(--erro);
 
-    border: 1px solid #fecdca;
-    border-left: 5px solid #d92d20;
+    background: var(--erro-fundo);
 
-    border-radius: 8px;
+    border: 1px solid rgba(217, 45, 32, 0.4);
 
-    font-size: 15px;
-    font-weight: bold;
+    border-left: 4px solid var(--erro-borda);
+
+    border-radius: var(--raio-pequeno);
+
+    font-size: 14px;
+
+    font-weight: 600;
 }
 
 #mensagemCliente::before,
@@ -247,53 +768,302 @@ form button:hover {
     content: "⚠️ ";
 }
 
-/* =========================
-   CELULAR
-========================= */
 
-@media (max-width: 600px) {
+/* =====================================================
+   21. BOTÃO BUSCAR CEP
+===================================================== */
 
-    body {
+.btn-cep {
+    align-self: end;
+
+    height: 43px;
+
+    padding: 0 20px;
+
+    border: 1px solid #4b555e;
+
+    border-radius: var(--raio-pequeno);
+
+    background: transparent;
+
+    color: var(--verde);
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.btn-cep:hover {
+    border-color: var(--verde);
+}
+
+
+/* =====================================================
+   22. TERMOS
+===================================================== */
+
+.termos {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 22px 0;
+
+    color: var(--cinza);
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.termos input {
+    width: 20px;
+    height: 20px;
+
+    accent-color: var(--verde);
+
+    cursor: pointer;
+}
+
+.termos a {
+    color: var(--verde);
+}
+
+.termos a:hover {
+    text-decoration: underline;
+}
+
+
+/* =====================================================
+   23. BOTÃO CADASTRAR
+===================================================== */
+
+.btn-cadastrar {
+    width: 100%;
+
+    height: 47px;
+
+    border: none;
+
+    border-radius: var(--raio-pequeno);
+
+    background: var(--verde);
+
+    color: var(--branco);
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-cadastrar:hover {
+    background: var(--verde-hover);
+
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   24. LINK PARA LOGIN
+===================================================== */
+
+.login-link {
+    margin-top: 25px;
+
+    color: var(--cinza);
+
+    font-size: 14px;
+
+    text-align: center;
+}
+
+.login-link a {
+    color: var(--verde);
+
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* =====================================================
+   25. FRETEIRO
+===================================================== */
+
+#formularioFreteiro {
+    display: none;
+}
+
+
+/* =====================================================
+   26. UTILITÁRIOS
+===================================================== */
+
+.texto-verde {
+    color: var(--verde);
+}
+
+.texto-cinza {
+    color: var(--cinza);
+}
+
+.texto-centro {
+    text-align: center;
+}
+
+.oculto {
+    display: none;
+}
+
+
+/* =====================================================
+   27. RESPONSIVIDADE - TABLET
+===================================================== */
+
+@media (max-width: 1100px) {
+
+    .header {
+        padding: 0 25px;
+    }
+
+    .menu {
+        gap: 18px;
+    }
+
+    .menu a {
+        font-size: 13px;
+    }
+
+    .logo {
+        min-width: 170px;
+    }
+
+    .conteudo {
+        grid-template-columns: 38% 62%;
+    }
+
+    .apresentacao {
+        padding: 50px 35px;
+    }
+
+    .texto-apresentacao h1 {
+        font-size: 42px;
+    }
+}
+
+
+/* =====================================================
+   28. RESPONSIVIDADE - TABLET PEQUENO
+===================================================== */
+
+@media (max-width: 850px) {
+
+    .pagina {
+        width: 100%;
+
+        margin: 0;
+
+        border: none;
+
+        border-radius: 0;
+    }
+
+    .header {
+        height: auto;
 
         padding: 20px;
 
-        align-items: flex-start;
-
-        padding-top: 30px;
-
+        flex-wrap: wrap;
     }
 
-    h1 {
-
-        position: static;
-
-        margin-bottom: 10px;
-
-    }
-
-    body > p {
-
-        position: static;
-
-        margin-bottom: 20px;
-
-    }
-
-    body > button {
+    .menu {
+        order: 3;
 
         width: 100%;
 
-        margin: 5px 0;
+        overflow-x: auto;
 
+        justify-content: flex-start;
+
+        padding-top: 10px;
     }
 
-    #formularioCliente,
-    #formularioFreteiro {
+    .conteudo {
+        grid-template-columns: 1fr;
+    }
 
-        margin-top: 30px;
+    .apresentacao {
+        min-height: 500px;
+    }
+}
 
+
+/* =====================================================
+   29. RESPONSIVIDADE - CELULAR
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .header {
+        gap: 15px;
+    }
+
+    .logo {
+        min-width: auto;
+
+        font-size: 28px;
+    }
+
+    .acoes-header {
+        margin-left: auto;
+    }
+
+    .btn-entrar,
+    .btn-criar {
+        padding: 9px 14px;
+
+        font-size: 13px;
+    }
+
+    .menu {
+        display: none;
+    }
+
+    .apresentacao {
+        min-height: 560px;
+
+        padding: 40px 25px;
+    }
+
+    .texto-apresentacao h1 {
+        font-size: 40px;
+    }
+
+    .area-formulario {
+        padding: 15px;
+    }
+
+    .formulario-container {
+        padding: 25px 18px;
+    }
+
+    .linha {
+        grid-template-columns: 1fr;
+    }
+
+    .titulo-formulario h2 {
+        font-size: 21px;
+    }
+
+    .card {
         padding: 20px;
-
     }
-
 }

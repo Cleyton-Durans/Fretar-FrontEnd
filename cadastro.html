@@ -2,156 +2,719 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   <link rel="stylesheet" href="css/style.css">
-    <title>Cadastro - Frete Fácil</title>
-    
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Fretar - Criar Conta</title>
+
 </head>
 
 <body>
 
-    <h1>Criar conta</h1>
+    <!-- =========================
+         PÁGINA
+    ========================== -->
 
-    <p>Como você deseja utilizar nossa plataforma?</p>
+    <div class="pagina">
 
-    <button type="button" id="botaoCliente">
-        👤 Sou cliente
-    </button>
 
-    <button type="button" id="botaoFreteiro">
-        🚚 Sou freteiro
-    </button>
+        <!-- =========================
+             HEADER
+        ========================== -->
 
-    <hr>
+        <header class="header">
 
-    <!-- Formulário do cliente -->
-    <div id="formularioCliente">
+            <div class="logo">
 
-        <h2>Cadastro de Cliente</h2>
+                <span class="logo-icone">🚚</span>
 
-<p id="mensagemCliente"></p>
-       <form id="formCliente">
+                <span>Fretar</span>
 
-            <label for="nomeCliente">Nome completo:</label>
-            <input type="text" id="nomeCliente">
+            </div>
 
-            <br><br>
 
-            <label for="emailCliente">E-mail:</label>
-            <input type="email" id="emailCliente">
+            <nav class="menu">
 
-            <br><br>
+                <a href="#">Início</a>
+                <a href="#">Como Funciona</a>
+                <a href="#">Para Motoristas</a>
+                <a href="#">Segurança</a>
+                <a href="#">Sobre Nós</a>
+                <a href="#">Contato</a>
 
-            <label for="telefoneCliente">Telefone:</label>
-            <input type="tel" id="telefoneCliente">
+            </nav>
 
-            <br><br>
 
-            <label for="senhaCliente">Senha:</label>
-            <input type="password" id="senhaCliente">
+            <div class="acoes-header">
 
-            <br><br>
+                <a href="login.html" class="btn-entrar">
+                    Entrar
+                </a>
 
-            <label for="confirmarSenhaCliente">
-                Confirmar senha:
-            </label>
+                <a href="cadastro.html" class="btn-criar">
+                    Criar Conta
+                </a>
 
-            <input type="password" id="confirmarSenhaCliente">
+            </div>
 
-            <br><br>
+        </header>
 
-            <button type="submit">
-                Criar conta
-            </button>
 
-        </form>
+        <!-- =========================
+             CONTEÚDO
+        ========================== -->
+
+        <main class="conteudo">
+
+
+            <!-- =========================
+                 LADO ESQUERDO
+            ========================== -->
+
+            <section class="apresentacao">
+
+                <div class="texto-apresentacao">
+
+                    <span class="destaque">
+                        CRIAR CONTA É RÁPIDO E FÁCIL
+                    </span>
+
+                    <h1>
+                        Cadastre-se
+                        <span>como cliente</span>
+                    </h1>
+
+                    <p>
+                        Preencha seus dados para começar a
+                        solicitar fretes de forma rápida,
+                        segura e transparente.
+                    </p>
+
+
+                    <!-- BENEFÍCIOS -->
+
+                    <div class="beneficios">
+
+
+                        <div class="beneficio">
+
+                            <div class="icone-beneficio">
+                                ✓
+                            </div>
+
+                            <div>
+
+                                <strong>Seguro</strong>
+
+                                <span>
+                                    Seus dados protegidos com segurança.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="beneficio">
+
+                            <div class="icone-beneficio">
+                                ⚡
+                            </div>
+
+                            <div>
+
+                                <strong>Rápido</strong>
+
+                                <span>
+                                    Cadastro em poucos minutos.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="beneficio">
+
+                            <div class="icone-beneficio">
+                                ✓
+                            </div>
+
+                            <div>
+
+                                <strong>Confiável</strong>
+
+                                <span>
+                                    Plataforma feita para facilitar seus fretes.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!--
+                    Coloque aqui sua imagem do caminhão
+                    quando tiver o arquivo.
+                -->
+
+                <div class="imagem-caminhao">
+
+                    <div class="efeito-luz"></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 FORMULÁRIO
+            ========================== -->
+
+            <section class="area-formulario">
+
+
+                <!-- ESCOLHA DO TIPO DE CONTA -->
+
+                <div class="escolha-conta">
+
+                    <h2>Criar conta</h2>
+
+                    <p>
+                        Escolha como deseja utilizar a plataforma
+                    </p>
+
+                    <div class="botoes-tipo">
+
+                        <button
+                            type="button"
+                            id="botaoCliente"
+                            class="tipo-conta ativo">
+
+                            👤 Sou cliente
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            id="botaoFreteiro"
+                            class="tipo-conta">
+
+                            🚚 Sou freteiro
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     FORMULÁRIO CLIENTE
+                ========================== -->
+
+                <div
+                    id="formularioCliente"
+                    class="formulario-container">
+
+
+                    <div class="titulo-formulario">
+
+                        <div class="icone-titulo">
+                            ♙
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Cadastro de Cliente
+                            </h2>
+
+                            <p>
+                                Preencha seus dados pessoais
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <p id="mensagemCliente"></p>
+
+
+                    <form id="formCliente">
+
+
+                        <div class="linha">
+
+                            <div class="campo">
+
+                                <label for="nomeCliente">
+                                    Nome Completo
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="nomeCliente"
+                                    placeholder="Digite seu nome completo">
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label for="telefoneCliente">
+                                    Telefone
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="telefoneCliente"
+                                    placeholder="(00) 00000-0000">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="linha">
+
+                            <div class="campo">
+
+                                <label for="emailCliente">
+                                    E-mail
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="emailCliente"
+                                    placeholder="seuemail@exemplo.com">
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label for="cpfCliente">
+                                    CPF
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="cpfCliente"
+                                    placeholder="000.000.000-00">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="linha endereco">
+
+                            <div class="campo campo-grande">
+
+                                <label for="enderecoCliente">
+                                    Endereço
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="enderecoCliente"
+                                    placeholder="Rua, número, bairro">
+
+                            </div>
+
+
+                            <div class="campo campo-pequeno">
+
+                                <label for="numeroCliente">
+                                    Número
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="numeroCliente"
+                                    placeholder="123">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="linha">
+
+                            <div class="campo">
+
+                                <label for="complementoCliente">
+                                    Complemento
+                                    <span>(opcional)</span>
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="complementoCliente"
+                                    placeholder="Apartamento, bloco, etc.">
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label for="cepCliente">
+                                    CEP
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="cepCliente"
+                                    placeholder="00000-000">
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="btn-cep">
+
+                                Buscar CEP
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="linha">
+
+                            <div class="campo campo-grande">
+
+                                <label for="cidadeCliente">
+                                    Cidade
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="cidadeCliente"
+                                    placeholder="Sua cidade">
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label for="estadoCliente">
+                                    Estado
+                                </label>
+
+                                <select id="estadoCliente">
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="RS">
+                                        Rio Grande do Sul
+                                    </option>
+
+                                    <option value="SC">
+                                        Santa Catarina
+                                    </option>
+
+                                    <option value="PR">
+                                        Paraná
+                                    </option>
+
+                                    <option value="SP">
+                                        São Paulo
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="linha">
+
+                            <div class="campo">
+
+                                <label for="senhaCliente">
+                                    Criar uma senha
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="senhaCliente"
+                                    placeholder="Mínimo 6 caracteres">
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label for="confirmarSenhaCliente">
+                                    Confirmar senha
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="confirmarSenhaCliente"
+                                    placeholder="Confirme sua senha">
+
+                            </div>
+
+                        </div>
+
+
+                        <label class="termos">
+
+                            <input
+                                type="checkbox"
+                                id="termosCliente">
+
+                            <span>
+                                Li e aceito os
+                                <a href="#">Termos de Uso</a>
+                                e a
+                                <a href="#">Política de Privacidade</a>
+                            </span>
+
+                        </label>
+
+
+                        <button
+                            type="submit"
+                            class="btn-cadastrar">
+
+                            👤
+                            Cadastrar
+
+                        </button>
+
+
+                    </form>
+
+
+                    <p class="login-link">
+
+                        Já tem uma conta?
+
+                        <a href="login.html">
+                            Faça login
+                        </a>
+
+                    </p>
+
+                </div>
+
+
+                <!-- =========================
+                     FORMULÁRIO FRETEIRO
+                ========================== -->
+
+                <div
+                    id="formularioFreteiro"
+                    class="formulario-container">
+
+
+                    <div class="titulo-formulario">
+
+                        <div class="icone-titulo">
+                            🚚
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Cadastro de Freteiro
+                            </h2>
+
+                            <p>
+                                Cadastre seus dados e seu veículo
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <p id="mensagemFreteiro"></p>
+
+
+                    <form id="formFreteiro">
+
+
+                        <div class="linha">
+
+                            <div class="campo">
+
+                                <label for="nomeFreteiro">
+                                    Nome Completo
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="nomeFreteiro"
+                                    placeholder="Digite seu nome completo">
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label for="emailFreteiro">
+                                    E-mail
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="emailFreteiro"
+                                    placeholder="seuemail@exemplo.com">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="linha">
+
+                            <div class="campo">
+
+                                <label for="telefoneFreteiro">
+                                    Telefone
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="telefoneFreteiro"
+                                    placeholder="(00) 00000-0000">
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label for="senhaFreteiro">
+                                    Senha
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="senhaFreteiro"
+                                    placeholder="Mínimo 6 caracteres">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="linha">
+
+                            <div class="campo">
+
+                                <label for="confirmarSenhaFreteiro">
+                                    Confirmar senha
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="confirmarSenhaFreteiro"
+                                    placeholder="Confirme sua senha">
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label for="tipoVeiculo">
+                                    Tipo de veículo
+                                </label>
+
+                                <select id="tipoVeiculo">
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="moto">
+                                        Moto
+                                    </option>
+
+                                    <option value="carro">
+                                        Carro
+                                    </option>
+
+                                    <option value="van">
+                                        Van
+                                    </option>
+
+                                    <option value="caminhao">
+                                        Caminhão
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="linha">
+
+                            <div class="campo">
+
+                                <label for="placa">
+                                    Placa
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="placa"
+                                    placeholder="ABC-1234">
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn-cadastrar">
+
+                            🚚
+                            Cadastrar
+
+                        </button>
+
+                    </form>
+
+
+                    <p class="login-link">
+
+                        Já tem uma conta?
+
+                        <a href="login.html">
+                            Faça login
+                        </a>
+
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
 
     </div>
 
-    <!-- Formulário do freteiro -->
-    <div id="formularioFreteiro">
-
-        <h2>Cadastro de Freteiro</h2>
-        <p id="mensagemFreteiro"></p>
-
-      <form id="formFreteiro">
-
-            <label for="nomeFreteiro">Nome completo:</label>
-            <input type="text" id="nomeFreteiro">
-
-            <br><br>
-
-            <label for="emailFreteiro">E-mail:</label>
-            <input type="email" id="emailFreteiro">
-
-            <br><br>
-
-            <label for="telefoneFreteiro">Telefone:</label>
-            <input type="tel" id="telefoneFreteiro">
-
-            <br><br>
-
-            <label for="senhaFreteiro">Senha:</label>
-            <input type="password" id="senhaFreteiro">
-
-            <br><br>
-
-            <label for="confirmarSenhaFreteiro">
-                Confirmar senha:
-            </label>
-
-            <input type="password" id="confirmarSenhaFreteiro">
-
-            <br><br>
-
-            <h3>Informações do veículo</h3>
-
-            <label for="tipoVeiculo">Tipo de veículo:</label>
-
-            <select id="tipoVeiculo">
-
-                <option value="">
-                    Selecione
-                </option>
-
-                <option value="moto">
-                    Moto
-                </option>
-
-                <option value="carro">
-                    Carro
-                </option>
-
-                <option value="utilitario">
-                    Utilitário
-                </option>
-
-                <option value="caminhao">
-                    Caminhão
-                </option>
-
-                <option value="van">
-                    Van
-                </option>
-
-            </select>
-
-            <br><br>
-
-            <label for="placa">Placa:</label>
-            <input type="text" id="placa">
-
-            <br><br>
-
-            <button type="submit">
-                Criar conta
-            </button>
-
-        </form>
-
-    </div>
 
     <script src="js/cadastro.js"></script>
 

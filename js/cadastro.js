@@ -12,7 +12,7 @@ const mensagemFreteiro = document.querySelector('#mensagemFreteiro');
 
 
 // Esconde os formulários quando a página começa
-formularioCliente.style.display = 'none';
+formularioCliente.style.display = 'block';
 formularioFreteiro.style.display = 'none';
 
 
