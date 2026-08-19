@@ -2,722 +2,304 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="css/style.css">
-
     <title>Fretar - Criar Conta</title>
-
 </head>
 
 <body>
-
-    <!-- =========================
-         PÁGINA
-    ========================== -->
-
     <div class="pagina">
-
-
-        <!-- =========================
-             HEADER
-        ========================== -->
-
         <header class="header">
-
-            <div class="logo">
-
-                <span class="logo-icone">🚚</span>
-
-                <span>Fretar</span>
-
-            </div>
-
+         <a href="index.html" class="logo">
+    <img src="imagens/logo-fretar.png" alt="Fretar">
+</a>
 
             <nav class="menu">
-
                 <a href="#">Início</a>
                 <a href="#">Como Funciona</a>
                 <a href="#">Para Motoristas</a>
                 <a href="#">Segurança</a>
                 <a href="#">Sobre Nós</a>
                 <a href="#">Contato</a>
-
             </nav>
 
-
             <div class="acoes-header">
-
-                <a href="login.html" class="btn-entrar">
-                    Entrar
-                </a>
-
-                <a href="cadastro.html" class="btn-criar">
-                    Criar Conta
-                </a>
-
+                <a href="login.html" class="btn-entrar">Entrar</a>
+                <a href="cadastro.html" class="btn-criar">Criar Conta</a>
             </div>
-
         </header>
 
-
-        <!-- =========================
-             CONTEÚDO
-        ========================== -->
-
         <main class="conteudo">
-
-
-            <!-- =========================
-                 LADO ESQUERDO
-            ========================== -->
-
-            <section class="apresentacao">
-
-                <div class="texto-apresentacao">
-
-                    <span class="destaque">
-                        CRIAR CONTA É RÁPIDO E FÁCIL
-                    </span>
-
-                    <h1>
-                        Cadastre-se
-                        <span>como cliente</span>
-                    </h1>
-
-                    <p>
-                        Preencha seus dados para começar a
-                        solicitar fretes de forma rápida,
-                        segura e transparente.
-                    </p>
-
-
-                    <!-- BENEFÍCIOS -->
-
-                    <div class="beneficios">
-
-
-                        <div class="beneficio">
-
-                            <div class="icone-beneficio">
-                                ✓
-                            </div>
-
-                            <div>
-
-                                <strong>Seguro</strong>
-
-                                <span>
-                                    Seus dados protegidos com segurança.
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="beneficio">
-
-                            <div class="icone-beneficio">
-                                ⚡
-                            </div>
-
-                            <div>
-
-                                <strong>Rápido</strong>
-
-                                <span>
-                                    Cadastro em poucos minutos.
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="beneficio">
-
-                            <div class="icone-beneficio">
-                                ✓
-                            </div>
-
-                            <div>
-
-                                <strong>Confiável</strong>
-
-                                <span>
-                                    Plataforma feita para facilitar seus fretes.
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!--
-                    Coloque aqui sua imagem do caminhão
-                    quando tiver o arquivo.
-                -->
-
-                <div class="imagem-caminhao">
-
-                    <div class="efeito-luz"></div>
-
-                </div>
-
-            </section>
-
-
-            <!-- =========================
-                 FORMULÁRIO
-            ========================== -->
-
             <section class="area-formulario">
-
-
-                <!-- ESCOLHA DO TIPO DE CONTA -->
-
                 <div class="escolha-conta">
-
                     <h2>Criar conta</h2>
-
-                    <p>
-                        Escolha como deseja utilizar a plataforma
-                    </p>
+                    <p>Escolha como deseja utilizar a plataforma</p>
 
                     <div class="botoes-tipo">
-
-                        <button
-                            type="button"
-                            id="botaoCliente"
-                            class="tipo-conta ativo">
-
-                            👤 Sou cliente
-
+                        <button type="button" id="botaoCliente" class="tipo-conta ativo">
+                            🧑‍💼 Sou cliente
                         </button>
 
-
-                        <button
-                            type="button"
-                            id="botaoFreteiro"
-                            class="tipo-conta">
-
-                            🚚 Sou freteiro
-
+                        <button type="button" id="botaoFreteiro" class="tipo-conta">
+                            🚛 Sou motorista
                         </button>
-
                     </div>
-
                 </div>
 
-
-                <!-- =========================
-                     FORMULÁRIO CLIENTE
-                ========================== -->
-
-                <div
-                    id="formularioCliente"
-                    class="formulario-container">
-
-
+                <div id="formularioCliente" class="formulario-container">
                     <div class="titulo-formulario">
-
-                        <div class="icone-titulo">
-                            ♙
-                        </div>
+                        <div class="icone-titulo">👤</div>
 
                         <div>
-
-                            <h2>
-                                Cadastro de Cliente
-                            </h2>
-
-                            <p>
-                                Preencha seus dados pessoais
-                            </p>
-
+                            <h2>Cadastro de Cliente</h2>
+                            <p>Preencha seus dados pessoais</p>
                         </div>
-
                     </div>
-
 
                     <p id="mensagemCliente"></p>
 
-
                     <form id="formCliente">
-
-
                         <div class="linha">
-
                             <div class="campo">
-
-                                <label for="nomeCliente">
-                                    Nome Completo
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="nomeCliente"
-                                    placeholder="Digite seu nome completo">
-
+                                <label for="nomeCliente">Nome Completo</label>
+                                <input type="text" id="nomeCliente" placeholder="Digite seu nome completo">
                             </div>
 
-
                             <div class="campo">
-
-                                <label for="telefoneCliente">
-                                    Telefone
-                                </label>
-
-                                <input
-                                    type="tel"
-                                    id="telefoneCliente"
-                                    placeholder="(00) 00000-0000">
-
+                                <label for="telefoneCliente">Telefone</label>
+                                <input type="tel" id="telefoneCliente" placeholder="(00) 00000-0000">
                             </div>
-
                         </div>
 
-
                         <div class="linha">
-
                             <div class="campo">
-
-                                <label for="emailCliente">
-                                    E-mail
-                                </label>
-
-                                <input
-                                    type="email"
-                                    id="emailCliente"
-                                    placeholder="seuemail@exemplo.com">
-
+                                <label for="emailCliente">E-mail</label>
+                                <input type="email" id="emailCliente" placeholder="seuemail@exemplo.com">
                             </div>
 
-
                             <div class="campo">
-
-                                <label for="cpfCliente">
-                                    CPF
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="cpfCliente"
-                                    placeholder="000.000.000-00">
-
+                                <label for="cpfCliente">CPF</label>
+                                <input type="text" id="cpfCliente" placeholder="000.000.000-00">
                             </div>
-
                         </div>
-
 
                         <div class="linha endereco">
-
                             <div class="campo campo-grande">
-
-                                <label for="enderecoCliente">
-                                    Endereço
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="enderecoCliente"
-                                    placeholder="Rua, número, bairro">
-
+                                <label for="enderecoCliente">Endereço</label>
+                                <input type="text" id="enderecoCliente" placeholder="Rua, número, bairro">
                             </div>
-
 
                             <div class="campo campo-pequeno">
-
-                                <label for="numeroCliente">
-                                    Número
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="numeroCliente"
-                                    placeholder="123">
-
+                                <label for="numeroCliente">Número</label>
+                                <input type="text" id="numeroCliente" placeholder="123">
                             </div>
-
                         </div>
 
-
                         <div class="linha">
-
                             <div class="campo">
-
                                 <label for="complementoCliente">
-                                    Complemento
-                                    <span>(opcional)</span>
+                                    Complemento <span>(opcional)</span>
                                 </label>
-
-                                <input
-                                    type="text"
-                                    id="complementoCliente"
-                                    placeholder="Apartamento, bloco, etc.">
-
+                                <input type="text" id="complementoCliente" placeholder="Apartamento, bloco, etc.">
                             </div>
-
 
                             <div class="campo">
-
-                                <label for="cepCliente">
-                                    CEP
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="cepCliente"
-                                    placeholder="00000-000">
-
+                                <label for="cepCliente">CEP</label>
+                                <input type="text" id="cepCliente" placeholder="00000-000">
                             </div>
 
-
-                            <button
-                                type="button"
-                                class="btn-cep">
-
-                                Buscar CEP
-
-                            </button>
-
+                            <button type="button" class="btn-cep">Buscar CEP</button>
                         </div>
 
-
                         <div class="linha">
-
                             <div class="campo campo-grande">
-
-                                <label for="cidadeCliente">
-                                    Cidade
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="cidadeCliente"
-                                    placeholder="Sua cidade">
-
+                                <label for="cidadeCliente">Cidade</label>
+                                <input type="text" id="cidadeCliente" placeholder="Sua cidade">
                             </div>
-
 
                             <div class="campo">
-
-                                <label for="estadoCliente">
-                                    Estado
-                                </label>
-
+                                <label for="estadoCliente">Estado</label>
                                 <select id="estadoCliente">
-
-                                    <option value="">
-                                        Selecione
-                                    </option>
-
-                                    <option value="RS">
-                                        Rio Grande do Sul
-                                    </option>
-
-                                    <option value="SC">
-                                        Santa Catarina
-                                    </option>
-
-                                    <option value="PR">
-                                        Paraná
-                                    </option>
-
-                                    <option value="SP">
-                                        São Paulo
-                                    </option>
-
+                                    <option value="">Selecione</option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="SC">Santa Catarina</option>
+                                    <option value="PR">Paraná</option>
+                                    <option value="SP">São Paulo</option>
                                 </select>
-
                             </div>
-
                         </div>
-
 
                         <div class="linha">
-
                             <div class="campo">
-
-                                <label for="senhaCliente">
-                                    Criar uma senha
-                                </label>
-
-                                <input
-                                    type="password"
-                                    id="senhaCliente"
-                                    placeholder="Mínimo 6 caracteres">
-
+                                <label for="senhaCliente">Criar uma senha</label>
+                                <input type="password" id="senhaCliente" placeholder="Mínimo 6 caracteres">
                             </div>
 
-
                             <div class="campo">
-
-                                <label for="confirmarSenhaCliente">
-                                    Confirmar senha
-                                </label>
-
-                                <input
-                                    type="password"
-                                    id="confirmarSenhaCliente"
-                                    placeholder="Confirme sua senha">
-
+                                <label for="confirmarSenhaCliente">Confirmar senha</label>
+                                <input type="password" id="confirmarSenhaCliente" placeholder="Confirme sua senha">
                             </div>
-
                         </div>
-
 
                         <label class="termos">
-
-                            <input
-                                type="checkbox"
-                                id="termosCliente">
-
+                            <input type="checkbox" id="termosCliente">
                             <span>
-                                Li e aceito os
-                                <a href="#">Termos de Uso</a>
-                                e a
+                                Li e aceito os <a href="#">Termos de Uso</a> e a
                                 <a href="#">Política de Privacidade</a>
                             </span>
-
                         </label>
 
-
-                        <button
-                            type="submit"
-                            class="btn-cadastrar">
-
-                            👤
-                            Cadastrar
-
+                        <button type="submit" class="btn-cadastrar">
+                            👤 Cadastrar
                         </button>
-
-
                     </form>
 
-
                     <p class="login-link">
-
-                        Já tem uma conta?
-
-                        <a href="login.html">
-                            Faça login
-                        </a>
-
+                        Já tem uma conta? <a href="login.html">Faça login</a>
                     </p>
-
                 </div>
 
-
-                <!-- =========================
-                     FORMULÁRIO FRETEIRO
-                ========================== -->
-
-                <div
-                    id="formularioFreteiro"
-                    class="formulario-container">
-
-
+                <div id="formularioFreteiro" class="formulario-container">
                     <div class="titulo-formulario">
+                        <div class="icone-titulo">🚚</div>
 
-                        <div class="icone-titulo">
-                            🚚
-                        </div>
 
                         <div>
-
-                            <h2>
-                                Cadastro de Freteiro
-                            </h2>
-
-                            <p>
-                                Cadastre seus dados e seu veículo
-                            </p>
-
+                            <h2>Cadastro de Freteiro</h2>
+                            <p>Cadastre seus dados e seu veículo</p>
                         </div>
-
                     </div>
 
 
                     <p id="mensagemFreteiro"></p>
 
-
                     <form id="formFreteiro">
 
-
                         <div class="linha">
-
                             <div class="campo">
-
-                                <label for="nomeFreteiro">
-                                    Nome Completo
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="nomeFreteiro"
-                                    placeholder="Digite seu nome completo">
-
+                                <label for="nomeFreteiro">Nome Completo</label>
+                                <input type="text" id="nomeFreteiro" placeholder="Digite seu nome completo">
                             </div>
 
+                            <div class="campo">
+                                <label for="cpfFreteiro">CPF</label>
+                                <input type="text" id="cpfFreteiro" placeholder="000.000.000-00">
+                            </div>
+                        </div>
+
+                        <div class="linha">
+                            <div class="campo">
+                                <label for="emailFreteiro">E-mail</label>
+                                <input type="email" id="emailFreteiro" placeholder="seuemail@exemplo.com">
+                            </div>
 
                             <div class="campo">
-
-                                <label for="emailFreteiro">
-                                    E-mail
-                                </label>
-
-                                <input
-                                    type="email"
-                                    id="emailFreteiro"
-                                    placeholder="seuemail@exemplo.com">
+                                <label for="telefoneFreteiro">Telefone</label>
+                                <input type="tel" id="telefoneFreteiro" placeholder="(00) 00000-0000">
 
                             </div>
 
                         </div>
-
-
-                        <div class="linha">
-
-                            <div class="campo">
-
-                                <label for="telefoneFreteiro">
-                                    Telefone
-                                </label>
-
-                                <input
-                                    type="tel"
-                                    id="telefoneFreteiro"
-                                    placeholder="(00) 00000-0000">
-
+                        <div class="linha endereco">
+                            <div class="campo campo-grande">
+                                <label for="enderecoFreteiro">Endereço</label>
+                                <input type="text" id="enderecoFreteiro" placeholder="Rua, avenida, bairro">
                             </div>
 
-
-                            <div class="campo">
-
-                                <label for="senhaFreteiro">
-                                    Senha
-                                </label>
-
-                                <input
-                                    type="password"
-                                    id="senhaFreteiro"
-                                    placeholder="Mínimo 6 caracteres">
-
+                            <div class="campo campo-pequeno">
+                                <label for="numeroFreteiro">Número</label>
+                                <input type="text" id="numeroFreteiro" placeholder="123">
                             </div>
-
                         </div>
 
-
                         <div class="linha">
-
                             <div class="campo">
-
-                                <label for="confirmarSenhaFreteiro">
-                                    Confirmar senha
+                                <label for="complementoFreteiro">
+                                    Complemento <span>(opcional)</span>
                                 </label>
-
-                                <input
-                                    type="password"
-                                    id="confirmarSenhaFreteiro"
-                                    placeholder="Confirme sua senha">
-
+                                <input type="text" id="complementoFreteiro" placeholder="Apartamento, bloco, etc.">
                             </div>
 
+                            <div class="campo">
+                                <label for="cepFreteiro">CEP</label>
+                                <input type="text" id="cepFreteiro" placeholder="00000-000">
+                            </div>
+
+                            <button type="button" class="btn-cep">
+                                Buscar CEP
+                            </button>
+                        </div>
+
+                        <div class="linha">
+                            <div class="campo campo-grande">
+                                <label for="cidadeFreteiro">Cidade</label>
+                                <input type="text" id="cidadeFreteiro" placeholder="Sua cidade">
+                            </div>
 
                             <div class="campo">
-
-                                <label for="tipoVeiculo">
-                                    Tipo de veículo
-                                </label>
-
-                                <select id="tipoVeiculo">
-
-                                    <option value="">
-                                        Selecione
-                                    </option>
-
-                                    <option value="moto">
-                                        Moto
-                                    </option>
-
-                                    <option value="carro">
-                                        Carro
-                                    </option>
-
-                                    <option value="van">
-                                        Van
-                                    </option>
-
-                                    <option value="caminhao">
-                                        Caminhão
-                                    </option>
-
+                                <label for="estadoFreteiro">Estado</label>
+                                <select id="estadoFreteiro">
+                                    <option value="">Selecione</option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="SC">Santa Catarina</option>
+                                    <option value="PR">Paraná</option>
+                                    <option value="SP">São Paulo</option>
                                 </select>
-
                             </div>
-
                         </div>
-
-
                         <div class="linha">
+                            <div class="campo">
+                                <label for="senhaFreteiro">Senha</label>
+                                <input type="password" id="senhaFreteiro" placeholder="Mínimo 6 caracteres">
+                            </div>
 
                             <div class="campo">
-
-                                <label for="placa">
-                                    Placa
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="placa"
-                                    placeholder="ABC-1234">
-
+                                <label for="confirmarSenhaFreteiro">Confirmar senha</label>
+                                <input type="password" id="confirmarSenhaFreteiro" placeholder="Confirme sua senha">
                             </div>
-
                         </div>
 
+                        <div class="linha">
+                            <div class="campo">
+                                <label for="tipoVeiculo">Tipo de veículo</label>
+                                <select id="tipoVeiculo">
+                                    <option value="">Selecione</option>
+                                    <option value="moto">Moto</option>
+                                    <option value="carro">Carro</option>
+                                    <option value="van">Van</option>
+                                    <option value="caminhao">Caminhão</option>
+                                </select>
+                            </div>
 
-                        <button
-                            type="submit"
-                            class="btn-cadastrar">
+                            <div class="campo">
+                                <label for="placa">Placa</label>
+                                <input type="text" id="placa" placeholder="ABC-1234">
+                            </div>
+                        </div>
 
-                            🚚
-                            Cadastrar
+                        <div class="linha">
+                            <div class="campo">
+                                <label for="renavam">RENAVAM</label>
+                                <input type="text" id="renavam" placeholder="Digite o RENAVAM do veículo">
+                            </div>
+                        </div>
 
+                        <button type="submit" class="btn-cadastrar">
+                            🚚 Cadastrar
                         </button>
 
                     </form>
 
-
                     <p class="login-link">
-
-                        Já tem uma conta?
-
-                        <a href="login.html">
-                            Faça login
-                        </a>
-
+                        Já tem uma conta? <a href="login.html">Faça login</a>
                     </p>
-
                 </div>
-
             </section>
-
         </main>
-
     </div>
 
-
     <script src="js/cadastro.js"></script>
-
 </body>
 
 </html>
