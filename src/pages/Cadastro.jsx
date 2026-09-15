@@ -12,6 +12,8 @@ function Cadastro({ onLogin, tema }) {
   const [mostrarSenha, setMostrarSenha] = useState(false)
   const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false)
 
+  const [buscandoCep, setBuscandoCep] = useState(false)
+
   const [cliente, setCliente] = useState({
     nome: '',
     telefone: '',
@@ -32,10 +34,18 @@ function Cadastro({ onLogin, tema }) {
     nome: '',
     email: '',
     telefone: '',
+    cpf: '',
+    endereco: '',
+    numero: '',
+    complemento: '',
+    cep: '',
+    cidade: '',
+    estado: '',
     senha: '',
     confirmarSenha: '',
     tipoVeiculo: '',
-    placa: ''
+    placa: '',
+    renavam: ''
   })
 
   /*
@@ -45,6 +55,7 @@ function Cadastro({ onLogin, tema }) {
     MODO CLARO:
     logo-fretar-claro.png
   */
+
   const logoAtual =
     tema === 'escuro'
       ? logoFretar
@@ -58,12 +69,25 @@ function Cadastro({ onLogin, tema }) {
       checked
     } = event.target
 
+    let novoValor =
+      type === 'checkbox'
+        ? checked
+        : value
+
+    if (name === 'cep') {
+      const cepLimpo = value
+        .replace(/\D/g, '')
+        .slice(0, 8)
+
+      novoValor =
+        cepLimpo.length > 5
+          ? `${cepLimpo.slice(0, 5)}-${cepLimpo.slice(5)}`
+          : cepLimpo
+    }
+
     setCliente({
       ...cliente,
-      [name]:
-        type === 'checkbox'
-          ? checked
-          : value
+      [name]: novoValor
     })
 
     setMensagem('')
@@ -76,9 +100,28 @@ function Cadastro({ onLogin, tema }) {
       value
     } = event.target
 
+    let novoValor = value
+
+    if (name === 'cep') {
+      const cepLimpo = value
+        .replace(/\D/g, '')
+        .slice(0, 8)
+
+      novoValor =
+        cepLimpo.length > 5
+          ? `${cepLimpo.slice(0, 5)}-${cepLimpo.slice(5)}`
+          : cepLimpo
+    }
+
+    if (name === 'renavam') {
+      novoValor = value
+        .replace(/\D/g, '')
+        .slice(0, 11)
+    }
+
     setFreteiro({
       ...freteiro,
-      [name]: value
+      [name]: novoValor
     })
 
     setMensagem('')
@@ -116,6 +159,15 @@ function Cadastro({ onLogin, tema }) {
     if (algumCampoVazio) {
       setMensagem(
         '⚠️ Preencha todos os campos obrigatórios.'
+      )
+
+      setTipoMensagem('erro')
+      return
+    }
+
+    if (cliente.cep.replace(/\D/g, '').length !== 8) {
+      setMensagem(
+        '⚠️ Digite um CEP válido com 8 números.'
       )
 
       setTipoMensagem('erro')
@@ -166,10 +218,17 @@ function Cadastro({ onLogin, tema }) {
       freteiro.nome,
       freteiro.email,
       freteiro.telefone,
+      freteiro.cpf,
+      freteiro.endereco,
+      freteiro.numero,
+      freteiro.cep,
+      freteiro.cidade,
+      freteiro.estado,
       freteiro.senha,
       freteiro.confirmarSenha,
       freteiro.tipoVeiculo,
-      freteiro.placa
+      freteiro.placa,
+      freteiro.renavam
     ]
 
     const algumCampoVazio =
@@ -180,6 +239,24 @@ function Cadastro({ onLogin, tema }) {
     if (algumCampoVazio) {
       setMensagem(
         '⚠️ Preencha todos os campos obrigatórios.'
+      )
+
+      setTipoMensagem('erro')
+      return
+    }
+
+    if (freteiro.cep.replace(/\D/g, '').length !== 8) {
+      setMensagem(
+        '⚠️ Digite um CEP válido com 8 números.'
+      )
+
+      setTipoMensagem('erro')
+      return
+    }
+
+    if (freteiro.renavam.length !== 11) {
+      setMensagem(
+        '⚠️ O RENAVAM deve ter 11 números.'
       )
 
       setTipoMensagem('erro')
@@ -214,21 +291,154 @@ function Cadastro({ onLogin, tema }) {
     setTipoMensagem('sucesso')
   }
 
-  function buscarCep() {
-    if (cliente.cep.trim() === '') {
+  async function buscarCepCliente() {
+    const cepLimpo = cliente.cep.replace(
+      /\D/g,
+      ''
+    )
+
+    if (cepLimpo.length !== 8) {
       setMensagem(
-        '⚠️ Digite o CEP para realizar a busca.'
+        '⚠️ Digite um CEP válido com 8 números.'
       )
 
       setTipoMensagem('erro')
       return
     }
 
-    setMensagem(
-      'Busca de CEP será conectada à API na próxima etapa.'
+    setBuscandoCep(true)
+    setMensagem('')
+    setTipoMensagem('')
+
+    try {
+      const resposta = await fetch(
+        `https://viacep.com.br/ws/${cepLimpo}/json/`
+      )
+
+      if (!resposta.ok) {
+        throw new Error(
+          'Erro ao consultar o CEP.'
+        )
+      }
+
+      const dados = await resposta.json()
+
+      if (dados.erro) {
+        setMensagem(
+          '⚠️ CEP não encontrado.'
+        )
+
+        setTipoMensagem('erro')
+        return
+      }
+
+      setCliente({
+        ...cliente,
+
+        cep:
+          `${cepLimpo.slice(0, 5)}-${cepLimpo.slice(5)}`,
+
+        endereco:
+          dados.logradouro || '',
+
+        cidade:
+          dados.localidade || '',
+
+        estado:
+          dados.uf || ''
+      })
+
+      setMensagem(
+        '✓ CEP encontrado! Endereço preenchido automaticamente.'
+      )
+
+      setTipoMensagem('sucesso')
+
+    } catch {
+      setMensagem(
+        '❌ Não foi possível consultar o CEP. Verifique sua conexão e tente novamente.'
+      )
+
+      setTipoMensagem('erro')
+
+    } finally {
+      setBuscandoCep(false)
+    }
+  }
+
+  async function buscarCepFreteiro() {
+    const cepLimpo = freteiro.cep.replace(
+      /\D/g,
+      ''
     )
 
-    setTipoMensagem('aviso')
+    if (cepLimpo.length !== 8) {
+      setMensagem(
+        '⚠️ Digite um CEP válido com 8 números.'
+      )
+
+      setTipoMensagem('erro')
+      return
+    }
+
+    setBuscandoCep(true)
+    setMensagem('')
+    setTipoMensagem('')
+
+    try {
+      const resposta = await fetch(
+        `https://viacep.com.br/ws/${cepLimpo}/json/`
+      )
+
+      if (!resposta.ok) {
+        throw new Error(
+          'Erro ao consultar o CEP.'
+        )
+      }
+
+      const dados = await resposta.json()
+
+      if (dados.erro) {
+        setMensagem(
+          '⚠️ CEP não encontrado.'
+        )
+
+        setTipoMensagem('erro')
+        return
+      }
+
+      setFreteiro({
+        ...freteiro,
+
+        cep:
+          `${cepLimpo.slice(0, 5)}-${cepLimpo.slice(5)}`,
+
+        endereco:
+          dados.logradouro || '',
+
+        cidade:
+          dados.localidade || '',
+
+        estado:
+          dados.uf || ''
+      })
+
+      setMensagem(
+        '✓ CEP encontrado! Endereço preenchido automaticamente.'
+      )
+
+      setTipoMensagem('sucesso')
+
+    } catch {
+      setMensagem(
+        '❌ Não foi possível consultar o CEP. Verifique sua conexão e tente novamente.'
+      )
+
+      setTipoMensagem('erro')
+
+    } finally {
+      setBuscandoCep(false)
+    }
   }
 
   return (
@@ -237,11 +447,13 @@ function Cadastro({ onLogin, tema }) {
       <section className="cadastro-apresentacao">
 
         <div className="cadastro-marca">
+
           <img
             src={logoAtual}
             alt="Fretar"
             className="logo-cadastro"
           />
+
         </div>
 
         <span className="cadastro-destaque">
@@ -267,6 +479,7 @@ function Cadastro({ onLogin, tema }) {
             </div>
 
             <div>
+
               <strong>
                 Seguro
               </strong>
@@ -274,6 +487,7 @@ function Cadastro({ onLogin, tema }) {
               <span>
                 Seus dados protegidos com segurança.
               </span>
+
             </div>
 
           </div>
@@ -285,6 +499,7 @@ function Cadastro({ onLogin, tema }) {
             </div>
 
             <div>
+
               <strong>
                 Rápido
               </strong>
@@ -292,6 +507,7 @@ function Cadastro({ onLogin, tema }) {
               <span>
                 Cadastro simples e rápido.
               </span>
+
             </div>
 
           </div>
@@ -303,6 +519,7 @@ function Cadastro({ onLogin, tema }) {
             </div>
 
             <div>
+
               <strong>
                 Confiável
               </strong>
@@ -310,6 +527,7 @@ function Cadastro({ onLogin, tema }) {
               <span>
                 Encontre as melhores soluções para seus fretes.
               </span>
+
             </div>
 
           </div>
@@ -544,6 +762,8 @@ function Cadastro({ onLogin, tema }) {
                     placeholder="00000-000"
                     value={cliente.cep}
                     onChange={alterarCliente}
+                    maxLength="9"
+                    inputMode="numeric"
                   />
 
                 </div>
@@ -555,9 +775,12 @@ function Cadastro({ onLogin, tema }) {
                 <button
                   type="button"
                   className="btn-cep"
-                  onClick={buscarCep}
+                  onClick={buscarCepCliente}
+                  disabled={buscandoCep}
                 >
-                  Buscar CEP
+                  {buscandoCep
+                    ? 'Buscando...'
+                    : 'Buscar CEP'}
                 </button>
 
               </div>
@@ -593,6 +816,7 @@ function Cadastro({ onLogin, tema }) {
                     value={cliente.estado}
                     onChange={alterarCliente}
                   >
+
                     <option value="">
                       Selecione
                     </option>
@@ -612,6 +836,7 @@ function Cadastro({ onLogin, tema }) {
                     <option value="SP">
                       São Paulo
                     </option>
+
                   </select>
 
                 </div>
@@ -838,6 +1063,178 @@ function Cadastro({ onLogin, tema }) {
 
                 <div className="campo-cadastro">
 
+                  <label htmlFor="freteiroCpf">
+                    CPF
+                  </label>
+
+                  <input
+                    id="freteiroCpf"
+                    name="cpf"
+                    type="text"
+                    placeholder="000.000.000-00"
+                    value={freteiro.cpf}
+                    onChange={alterarFreteiro}
+                  />
+
+                </div>
+
+              </div>
+
+              <div className="linha-cadastro">
+
+                <div className="campo-cadastro campo-grande">
+
+                  <label htmlFor="freteiroEndereco">
+                    Endereço
+                  </label>
+
+                  <input
+                    id="freteiroEndereco"
+                    name="endereco"
+                    type="text"
+                    placeholder="Rua, bairro"
+                    value={freteiro.endereco}
+                    onChange={alterarFreteiro}
+                  />
+
+                </div>
+
+                <div className="campo-cadastro">
+
+                  <label htmlFor="freteiroNumero">
+                    Número
+                  </label>
+
+                  <input
+                    id="freteiroNumero"
+                    name="numero"
+                    type="text"
+                    placeholder="123"
+                    value={freteiro.numero}
+                    onChange={alterarFreteiro}
+                  />
+
+                </div>
+
+              </div>
+
+              <div className="linha-cadastro">
+
+                <div className="campo-cadastro">
+
+                  <label htmlFor="freteiroComplemento">
+                    Complemento <span>(opcional)</span>
+                  </label>
+
+                  <input
+                    id="freteiroComplemento"
+                    name="complemento"
+                    type="text"
+                    placeholder="Apartamento, bloco..."
+                    value={freteiro.complemento}
+                    onChange={alterarFreteiro}
+                  />
+
+                </div>
+
+                <div className="campo-cadastro">
+
+                  <label htmlFor="freteiroCep">
+                    CEP
+                  </label>
+
+                  <input
+                    id="freteiroCep"
+                    name="cep"
+                    type="text"
+                    placeholder="00000-000"
+                    value={freteiro.cep}
+                    onChange={alterarFreteiro}
+                    maxLength="9"
+                    inputMode="numeric"
+                  />
+
+                </div>
+
+              </div>
+
+              <div className="cep-botao-container">
+
+                <button
+                  type="button"
+                  className="btn-cep"
+                  onClick={buscarCepFreteiro}
+                  disabled={buscandoCep}
+                >
+                  {buscandoCep
+                    ? 'Buscando...'
+                    : 'Buscar CEP'}
+                </button>
+
+              </div>
+
+              <div className="linha-cadastro">
+
+                <div className="campo-cadastro">
+
+                  <label htmlFor="freteiroCidade">
+                    Cidade
+                  </label>
+
+                  <input
+                    id="freteiroCidade"
+                    name="cidade"
+                    type="text"
+                    placeholder="Sua cidade"
+                    value={freteiro.cidade}
+                    onChange={alterarFreteiro}
+                  />
+
+                </div>
+
+                <div className="campo-cadastro">
+
+                  <label htmlFor="freteiroEstado">
+                    Estado
+                  </label>
+
+                  <select
+                    id="freteiroEstado"
+                    name="estado"
+                    value={freteiro.estado}
+                    onChange={alterarFreteiro}
+                  >
+
+                    <option value="">
+                      Selecione
+                    </option>
+
+                    <option value="RS">
+                      Rio Grande do Sul
+                    </option>
+
+                    <option value="SC">
+                      Santa Catarina
+                    </option>
+
+                    <option value="PR">
+                      Paraná
+                    </option>
+
+                    <option value="SP">
+                      São Paulo
+                    </option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+              <div className="linha-cadastro">
+
+                <div className="campo-cadastro">
+
                   <label htmlFor="freteiroSenha">
                     Senha
                   </label>
@@ -874,10 +1271,6 @@ function Cadastro({ onLogin, tema }) {
                   </div>
 
                 </div>
-
-              </div>
-
-              <div className="linha-cadastro">
 
                 <div className="campo-cadastro">
 
@@ -918,6 +1311,10 @@ function Cadastro({ onLogin, tema }) {
 
                 </div>
 
+              </div>
+
+              <div className="linha-cadastro">
+
                 <div className="campo-cadastro">
 
                   <label htmlFor="tipoVeiculo">
@@ -942,10 +1339,10 @@ function Cadastro({ onLogin, tema }) {
                     <option value="carro">
                       Carro
                     </option>
-                    
+
                     <option value="caminhonete">
                       Caminhonete
-                      </option>
+                    </option>
 
                     <option value="van">
                       Van
@@ -958,10 +1355,6 @@ function Cadastro({ onLogin, tema }) {
                   </select>
 
                 </div>
-
-              </div>
-
-              <div className="linha-cadastro">
 
                 <div className="campo-cadastro">
 
@@ -976,6 +1369,29 @@ function Cadastro({ onLogin, tema }) {
                     placeholder="ABC-1234"
                     value={freteiro.placa}
                     onChange={alterarFreteiro}
+                  />
+
+                </div>
+
+              </div>
+
+              <div className="linha-cadastro">
+
+                <div className="campo-cadastro campo-grande">
+
+                  <label htmlFor="freteiroRenavam">
+                    RENAVAM
+                  </label>
+
+                  <input
+                    id="freteiroRenavam"
+                    name="renavam"
+                    type="text"
+                    placeholder="Digite o RENAVAM do veículo"
+                    value={freteiro.renavam}
+                    onChange={alterarFreteiro}
+                    maxLength="11"
+                    inputMode="numeric"
                   />
 
                 </div>
