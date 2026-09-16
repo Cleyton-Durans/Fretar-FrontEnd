@@ -86,3 +86,41 @@ img {
   max-width: 100%;
   display: block;
 }
+
+/* =========================================================
+   FIX DEFINITIVO: ALINHAMENTO DO HISTÓRICO EM COLUNAS
+========================================================= */
+
+/* 1. Garante que o bloco de detalhes ocupe todo o espaço central */
+.viagem-detalhes {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex: 1 !important;
+  gap: 20px !important;
+  margin: 0 30px !important; /* Cria um distanciamento fixo entre a rota e o status */
+}
+
+/* 2. O segredo: Força cada coluna (Motorista, Veículo, Valor) a ter exatamente o mesmo peso */
+.viagem-info {
+  flex: 1 !important;        /* Faz as 3 colunas dividirem o espaço do card em partes iguais */
+  min-width: 0 !important;    /* Evita que textos compridos quebrem o layout */
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* 3. Ajuste extra para a coluna de VALOR ficar ligeiramente alinhada à direita, se preferir, 
+   ou mantenha apenas o padrão. Para alinhar tudo perfeitamente à esquerda em colunas verticais: */
+.viagem-info span {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important; /* Coloca "..." se o texto do veículo for gigante */
+}
+
+/* 4. Mantém a caixinha de status blindada com tamanho fixo */
+.status-viagem {
+  width: 140px !important;
+  text-align: center !important;
+  flex-shrink: 0 !important;
+}
+

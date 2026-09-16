@@ -4,6 +4,7 @@ import Cabecalho from './components/Cabecalho'
 import Rodape from './components/Rodape'
 import Login from './pages/Login'
 import Cadastro from './pages/Cadastro'
+import Historico from './pages/Historico'
 
 import './App.css'
 
@@ -51,6 +52,19 @@ function App() {
     })
   }
 
+  function irParaHistorico(event) {
+    if (event) {
+      event.preventDefault()
+    }
+
+    setPagina('historico')
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
   return (
     <div className={`app tema-${tema}`}>
 
@@ -59,6 +73,7 @@ function App() {
         aoAlternarTema={alternarTema}
         onLogin={irParaLogin}
         onCadastro={irParaCadastro}
+        onHistorico={irParaHistorico}
       />
 
       {pagina === 'login' && (
@@ -72,6 +87,12 @@ function App() {
         <Cadastro
           tema={tema}
           onLogin={irParaLogin}
+        />
+      )}
+
+      {pagina === 'historico' && (
+        <Historico
+          tema={tema}
         />
       )}
 
