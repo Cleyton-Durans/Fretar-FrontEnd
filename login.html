@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Fretar - Login</title>
+</head>
+
+<body>
+    <div class="pagina">
+        <header class="header">
+            <a href="index.html" class="logo">
+                <img src="imagens/logo-fretar.png" alt="Fretar">
+            </a>
+
+            <nav class="menu">
+                <a href="index.html">Início</a>
+                <a href="#">Como Funciona</a>
+                <a href="#">Para Motoristas</a>
+                <a href="#">Segurança</a>
+                <a href="#">Sobre Nós</a>
+                <a href="#">Contato</a>
+            </nav>
+
+            <div class="acoes-header">
+                <a href="login.html" class="btn-entrar">Entrar</a>
+                <a href="cadastro.html" class="btn-criar">Criar Conta</a>
+            </div>
+        </header>
+
+        <main class="login-layout">
+            <section class="login-apresentacao">
+                <div class="login-marca">
+                    <img src="imagens/logo-fretar.png" alt="Fretar">
+                </div>
+
+                <h1>
+                    O jeito fácil
+                    <span>de enviar.</span>
+                </h1>
+
+                <p class="login-descricao">
+                    Conectamos quem precisa enviar com motoristas de confiança.
+                    Rápido, seguro e transparente.
+                </p>
+
+                <div class="login-beneficios">
+                    <div class="login-beneficio">
+                        <span>⚡</span>
+                        <div>
+                            <strong>Rápido</strong>
+                            <p>Entregas ágeis e eficientes.</p>
+                        </div>
+                    </div>
+
+                    <div class="login-beneficio">
+                        <span>🛡️</span>
+                        <div>
+                            <strong>Seguro</strong>
+                            <p>Motoristas verificados e experientes.</p>
+                        </div>
+                    </div>
+
+                    <div class="login-beneficio">
+                        <span>🗺️</span>
+                        <div>
+                            <strong>Transparente</strong>
+                            <p>Acompanhe tudo em tempo real.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="login-numeros">
+                    <div>
+                        <strong>500+</strong>
+                        <small>Entregas realizadas</small>
+                    </div>
+
+                    <div>
+                        <strong>100+</strong>
+                        <small>Motoristas parceiros</small>
+                    </div>
+
+                    <div>
+                        <strong>★ 4.8</strong>
+                        <small>Avaliação média</small>
+                    </div>
+                </div>
+            </section>
+
+            <section class="login-card">
+                <div class="login-abas">
+                    <span class="aba-login ativa">Login</span>
+                    <a href="cadastro.html" class="aba-login">Cadastre-se</a>
+                </div>
+
+                <div class="login-titulo">
+                    <h2>Bem-vindo de volta! 👋</h2>
+                    <p>Faça login para continuar</p>
+                </div>
+
+                <p id="mensagemLogin" class="mensagem-login"></p>
+
+                <form id="formLogin">
+                    <div class="login-campo">
+                        <label for="emailLogin">E-mail</label>
+                        <input
+                            type="email"
+                            id="emailLogin"
+                            placeholder="seuemail@exemplo.com"
+                        >
+                    </div>
+
+                    <div class="login-campo">
+                        <label for="senhaLogin">Senha</label>
+
+                        <div class="login-senha">
+                            <input
+                                type="password"
+                                id="senhaLogin"
+                                placeholder="Digite sua senha"
+                            >
+
+                            <button
+                                type="button"
+                                id="mostrarSenha"
+                                class="login-olho"
+                                aria-label="Mostrar senha"
+                            >
+                                👁
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="login-opcoes">
+                        <label>
+                            <input type="checkbox" id="lembrarLogin">
+                            Lembrar de mim
+                        </label>
+
+                        <a href="#">Esqueci minha senha</a>
+                    </div>
+
+                    <button type="submit" class="login-botao-entrar">
+                        Entrar
+                    </button>
+                </form>
+
+                <div class="login-ou">
+                    <span></span>
+                    <p>ou continue com</p>
+                    <span></span>
+                </div>
+
+                <button type="button" class="login-social facebook">
+                    <b>f</b>
+                    Entrar com Facebook
+                </button>
+
+                <button type="button" class="login-social google">
+                    <b>G</b>
+                    Continuar com Google
+                </button>
+
+                <p class="login-cadastro-link">
+                    Ainda não tem uma conta?
+                    <a href="cadastro.html">Cadastre-se</a>
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>
