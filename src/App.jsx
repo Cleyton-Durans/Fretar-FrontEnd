@@ -1,105 +1,76 @@
-import { useState } from 'react'
+import { useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 
-import Cabecalho from './components/Cabecalho'
-import Rodape from './components/Rodape'
-import Login from './pages/Login'
-import Cadastro from './pages/Cadastro'
-import Historico from './pages/Historico'
+import Cabecalho from "./components/Cabecalho";
+import Rodape from "./components/Rodape";
+import RotaProtegida from "./components/RotaProtegida";
 
-import './App.css'
+import Inicio from "./pages/Inicio";
+import Login from "./pages/Login";
+import Cadastro from "./pages/Cadastro";
+import Historico from "./pages/Historico";
+import Mapa from "./pages/Mapa";
+import ClientePainel from "./pages/ClientePainel";
+import MotoristaPainel from "./pages/MotoristaPainel";
+
+import "./App.css";
 
 function App() {
-  const [pagina, setPagina] = useState('login')
-
-  const [tema, setTema] = useState(() => {
-    return localStorage.getItem('tema-fretar') || 'claro'
-  })
+  const [tema, setTema] = useState(
+    () => localStorage.getItem("tema-fretar") || "claro"
+  );
 
   function alternarTema() {
     setTema((temaAtual) => {
-      const novoTema =
-        temaAtual === 'escuro' ? 'claro' : 'escuro'
-
-      localStorage.setItem('tema-fretar', novoTema)
-
-      return novoTema
-    })
-  }
-
-  function irParaCadastro(event) {
-    if (event) {
-      event.preventDefault()
-    }
-
-    setPagina('cadastro')
-
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
-  }
-
-  function irParaLogin(event) {
-    if (event) {
-      event.preventDefault()
-    }
-
-    setPagina('login')
-
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
-  }
-
-  function irParaHistorico(event) {
-    if (event) {
-      event.preventDefault()
-    }
-
-    setPagina('historico')
-
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
+      const novoTema = temaAtual === "escuro" ? "claro" : "escuro";
+      localStorage.setItem("tema-fretar", novoTema);
+      return novoTema;
+    });
   }
 
   return (
     <div className={`app tema-${tema}`}>
+      <Cabecalho tema={tema} aoAlternarTema={alternarTema} />
 
-      <Cabecalho
-        tema={tema}
-        aoAlternarTema={alternarTema}
-        onLogin={irParaLogin}
-        onCadastro={irParaCadastro}
-        onHistorico={irParaHistorico}
-      />
+      <Routes>
+        <Route path="/" element={<Inicio />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/historico" element={<Historico tema={tema} />} />
 
-      {pagina === 'login' && (
-        <Login
-          tema={tema}
-          onCadastro={irParaCadastro}
+        <Route
+          path="/mapa"
+          element={
+            <RotaProtegida>
+              <Mapa />
+            </RotaProtegida>
+          }
         />
-      )}
 
-      {pagina === 'cadastro' && (
-        <Cadastro
-          tema={tema}
-          onLogin={irParaLogin}
+        <Route
+          path="/cliente"
+          element={
+            <RotaProtegida papel="user">
+              <ClientePainel />
+            </RotaProtegida>
+          }
         />
-      )}
 
-      {pagina === 'historico' && (
-        <Historico
-          tema={tema}
+        <Route
+          path="/motorista"
+          element={
+            <RotaProtegida papel="driver">
+              <MotoristaPainel />
+            </RotaProtegida>
+          }
         />
-      )}
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
 
       <Rodape />
-
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

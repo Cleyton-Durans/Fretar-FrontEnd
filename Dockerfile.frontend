@@ -1,0 +1,21 @@
+# Frontend Fretar — build + `vite preview` (Node 22).
+# `vite preview` e mais estavel que o dev server em apresentacoes ao vivo e
+# ja usa o mesmo proxy /api definido em vite.config.js.
+FROM docker.io/library/node:22-alpine
+
+WORKDIR /app
+
+# Instala dependencias lockadas primeiro (melhor uso de cache).
+COPY package.json package-lock.json ./
+RUN npm install
+
+COPY index.html vite.config.js ./
+COPY src ./src
+COPY public ./public
+
+# Gera o bundle de producao que o `vite preview` serve.
+RUN npm run build
+
+EXPOSE 5174
+
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "5174"]

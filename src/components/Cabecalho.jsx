@@ -1,116 +1,70 @@
-import logoFretarEscuro from '../assets/logo-fretar.png'
-import logoFretarClaro from '../assets/logo-fretar-claro.png'
+import { Link, useNavigate } from "react-router-dom";
 
-// CORREÇÃO 1: Adicionado onLogin e onCadastro aqui nos parâmetros
-function Cabecalho({ tema, aoAlternarTema, onHistorico, onLogin, onCadastro }) {
-  const estaNoModoEscuro = tema === 'escuro'
+import { useSessao } from "../context/SessaoContext";
+
+import logoFretarEscuro from "../assets/logo-fretar.png";
+import logoFretarClaro from "../assets/logo-fretar-claro.png";
+
+function Cabecalho({ tema, aoAlternarTema }) {
+  const { logado, papel, sair } = useSessao();
+  const navigate = useNavigate();
+
+  const estaNoModoEscuro = tema === "escuro";
+
+  function sairERedirecionar() {
+    sair();
+    navigate("/");
+  }
 
   return (
     <header className="header">
-
-      <a
-        className="logo"
-        href="#inicio"
-        aria-label="Página inicial do Fretar"
-        onClick={(e) => {
-          e.preventDefault()
-          onLogin() // Se clicar no logo, volta para a tela inicial/login
-        }}
-      >
+      <Link className="logo" to="/" aria-label="Página inicial do Fretar">
         <img
           src={estaNoModoEscuro ? logoFretarEscuro : logoFretarClaro}
           alt="Fretar"
         />
-      </a>
+      </Link>
 
-      <nav
-        className="menu"
-        aria-label="Navegação principal"
-      >
-        <a href="#inicio" onClick={(e) => { e.preventDefault(); onLogin(); }}>
-          Início
-        </a>
-
-        <a href="#como-funciona">
-          Como funciona
-        </a>
-
-        <a href="#motoristas">
-          Para motoristas
-        </a>
-
-        <a href="#seguranca">
-          Segurança
-        </a>
-
-        <a href="#sobre">
-          Sobre nós
-        </a>
-
-        <a href="#contato">
-          Contato
-        </a>
+      <nav className="menu" aria-label="Navegação principal">
+        <Link to="/">Início</Link>
+        <Link to="/historico">Meu histórico</Link>
+        {logado && <Link to="/mapa">Mapa</Link>}
+        {papel === "user" && <Link to="/cliente">Meus fretes</Link>}
+        {papel === "driver" && <Link to="/motorista">Ofertas</Link>}
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#contato">Contato</a>
       </nav>
 
       <div className="acoes-header">
-
         <button
           className="botao-tema"
           type="button"
           onClick={aoAlternarTema}
           aria-label={
-            estaNoModoEscuro
-              ? 'Ativar tema claro'
-              : 'Ativar tema escuro'
+            estaNoModoEscuro ? "Ativar tema claro" : "Ativar tema escuro"
           }
-          title={
-            estaNoModoEscuro
-              ? 'Ativar tema claro'
-              : 'Ativar tema escuro'
-          }
+          title={estaNoModoEscuro ? "Ativar tema claro" : "Ativar tema escuro"}
         >
-          {estaNoModoEscuro ? '☀️' : '🌙'}
+          {estaNoModoEscuro ? "☀️" : "🌙"}
         </button>
 
-        <a
-          className="btn-entrar"
-          href="#historico"
-          onClick={(e) => {
-            e.preventDefault()
-            onHistorico()
-          }}
-        >
-          Meu histórico
-        </a>
-
-        {/* CORREÇÃO 2: Adicionado o onClick para interceptar o clique e ir para o Login */}
-        <a
-          className="btn-entrar"
-          href="#login"
-          onClick={(e) => {
-            e.preventDefault()
-            onLogin()
-          }}
-        >
-          Entrar
-        </a>
-
-        {/* CORREÇÃO 3: Adicionado o onClick para interceptar o clique e ir para o Cadastro */}
-        <a
-          className="btn-criar"
-          href="#cadastro"
-          onClick={(e) => {
-            e.preventDefault()
-            onCadastro()
-          }}
-        >
-          Criar conta
-        </a>
-
+        {logado ? (
+          <button className="btn-entrar" type="button" onClick={sairERedirecionar}>
+            Sair
+          </button>
+        ) : (
+          <>
+            <Link className="btn-entrar" to="/login">
+              Entrar
+            </Link>
+            <Link className="btn-criar" to="/cadastro">
+              Criar conta
+            </Link>
+          </>
+        )}
       </div>
-
     </header>
-  )
+  );
 }
 
-export default Cabecalho
+export default Cabecalho;
