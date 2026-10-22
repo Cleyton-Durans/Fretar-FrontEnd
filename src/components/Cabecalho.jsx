@@ -1,7 +1,8 @@
 import logoFretarEscuro from '../assets/logo-fretar.png'
 import logoFretarClaro from '../assets/logo-fretar-claro.png'
 
-function Cabecalho({ tema, aoAlternarTema }) {
+// CORREÇÃO 1: Adicionado onLogin e onCadastro aqui nos parâmetros
+function Cabecalho({ tema, aoAlternarTema, onHistorico, onLogin, onCadastro }) {
   const estaNoModoEscuro = tema === 'escuro'
 
   return (
@@ -11,6 +12,10 @@ function Cabecalho({ tema, aoAlternarTema }) {
         className="logo"
         href="#inicio"
         aria-label="Página inicial do Fretar"
+        onClick={(e) => {
+          e.preventDefault()
+          onLogin() // Se clicar no logo, volta para a tela inicial/login
+        }}
       >
         <img
           src={estaNoModoEscuro ? logoFretarEscuro : logoFretarClaro}
@@ -22,7 +27,7 @@ function Cabecalho({ tema, aoAlternarTema }) {
         className="menu"
         aria-label="Navegação principal"
       >
-        <a href="#inicio">
+        <a href="#inicio" onClick={(e) => { e.preventDefault(); onLogin(); }}>
           Início
         </a>
 
@@ -69,14 +74,35 @@ function Cabecalho({ tema, aoAlternarTema }) {
 
         <a
           className="btn-entrar"
+          href="#historico"
+          onClick={(e) => {
+            e.preventDefault()
+            onHistorico()
+          }}
+        >
+          Meu histórico
+        </a>
+
+        {/* CORREÇÃO 2: Adicionado o onClick para interceptar o clique e ir para o Login */}
+        <a
+          className="btn-entrar"
           href="#login"
+          onClick={(e) => {
+            e.preventDefault()
+            onLogin()
+          }}
         >
           Entrar
         </a>
 
+        {/* CORREÇÃO 3: Adicionado o onClick para interceptar o clique e ir para o Cadastro */}
         <a
           className="btn-criar"
           href="#cadastro"
+          onClick={(e) => {
+            e.preventDefault()
+            onCadastro()
+          }}
         >
           Criar conta
         </a>

@@ -1718,3 +1718,475 @@
 .app.tema-escuro .btn-entrar:hover {
   background: #1b2b1c;
 }
+
+
+/* =========================================================
+   HISTÓRICO DE VIAGENS - LAYOUT PRINCIPAL
+========================================================= */
+
+.historico-layout {
+  width: 100%;
+  min-height: calc(100vh - 78px);
+
+  padding: 55px 7% 80px;
+
+  background:
+    radial-gradient(
+      circle at 18% 15%,
+      rgba(73, 163, 27, 0.1),
+      transparent 32%
+    ),
+    #f4f7f2;
+}
+
+.historico-cabecalho {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  gap: 20px;
+
+  margin-bottom: 30px;
+}
+
+.historico-titulo h2 {
+  margin-bottom: 7px;
+
+  color: #172033;
+
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.historico-titulo p {
+  color: #667287;
+
+  font-size: 14px;
+}
+
+.historico-resumo {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  padding: 14px 22px;
+
+  border: 1px solid #d9e6d3;
+  border-radius: 14px;
+
+  background: #eef8e9;
+}
+
+.historico-resumo span {
+  color: #438d1f;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.historico-resumo strong {
+  color: #28751a;
+
+  font-size: 22px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   HISTÓRICO - FILTROS E BUSCA
+========================================================= */
+
+.historico-controles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  gap: 16px;
+
+  margin-bottom: 26px;
+}
+
+.historico-filtros {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+.filtro-historico {
+  height: 40px;
+
+  padding: 0 18px;
+
+  border: 1px solid #d9e0d5;
+  border-radius: 999px;
+
+  background: #ffffff;
+
+  color: #4b5666;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.filtro-historico:hover {
+  border-color: #65a947;
+
+  color: #438d1f;
+}
+
+.filtro-historico.ativo {
+  border-color: #4c9b27;
+
+  background: #4c9828;
+
+  color: #ffffff;
+}
+
+.historico-busca input {
+  width: 260px;
+  height: 42px;
+
+  padding: 0 16px;
+
+  border: 1px solid #d9e0d5;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #172033;
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.historico-busca input:focus {
+  border-color: #65a947;
+
+  outline: none;
+}
+
+.historico-busca input::placeholder {
+  color: #92a08e;
+}
+
+
+/* =========================================================
+   HISTÓRICO - LISTA DE VIAGENS
+========================================================= */
+
+.historico-lista {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.historico-vazio {
+  padding: 40px;
+
+  border: 1px dashed #d9e0d5;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  color: #667287;
+
+  text-align: center;
+
+  font-size: 14px;
+}
+
+.viagem-card {
+  display: grid;
+
+  grid-template-columns: 1.3fr 1.5fr auto;
+
+  align-items: center;
+
+  gap: 24px;
+
+  padding: 22px 26px;
+
+  border: 1px solid #e0e6dc;
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 10px 30px rgba(20, 35, 20, 0.05);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.viagem-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 36px rgba(20, 35, 20, 0.09);
+}
+
+.viagem-rota {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.viagem-pontos {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  flex-wrap: wrap;
+
+  color: #172033;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.viagem-seta {
+  color: #4c9828;
+
+  font-weight: 700;
+}
+
+.viagem-data {
+  color: #8a9488;
+
+  font-size: 13px;
+}
+
+.viagem-detalhes {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 22px;
+}
+
+.viagem-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.viagem-info-rotulo {
+  color: #92a08e;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.viagem-info span:last-child {
+  color: #344133;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.status-viagem {
+  justify-self: end;
+
+  padding: 7px 14px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+.status-concluida {
+  background: #eff9ec;
+
+  color: #28751a;
+}
+
+.status-andamento {
+  background: #fff9e8;
+
+  color: #8a6914;
+}
+
+.status-cancelada {
+  background: #fff2f2;
+
+  color: #b42318;
+}
+
+
+/* =========================================================
+   HISTÓRICO - TEMA ESCURO
+========================================================= */
+
+.tema-escuro .historico-layout {
+  background:
+    radial-gradient(
+      circle at 18% 15%,
+      rgba(75, 160, 40, 0.12),
+      transparent 32%
+    ),
+    #101510;
+}
+
+.tema-escuro .historico-titulo h2 {
+  color: #f2f5f0;
+}
+
+.tema-escuro .historico-titulo p {
+  color: #aeb9aa;
+}
+
+.tema-escuro .historico-resumo {
+  border-color: #365c2d;
+
+  background: rgba(25, 35, 24, 0.9);
+}
+
+.tema-escuro .historico-resumo strong {
+  color: #7bd34c;
+}
+
+.tema-escuro .filtro-historico {
+  border-color: #374137;
+
+  background: #202720;
+
+  color: #c5cec2;
+}
+
+.tema-escuro .filtro-historico:hover {
+  border-color: #5b9f3e;
+
+  color: #80d253;
+}
+
+.tema-escuro .filtro-historico.ativo {
+  border-color: #5b9f3e;
+
+  background: #3f851f;
+
+  color: #ffffff;
+}
+
+.tema-escuro .historico-busca input {
+  border-color: #3a4538;
+
+  background: #202720;
+
+  color: #f0f4ee;
+}
+
+.tema-escuro .historico-busca input::placeholder {
+  color: #7f8b7d;
+}
+
+.tema-escuro .historico-busca input:focus {
+  border-color: #66b443;
+
+  background: #222b21;
+}
+
+.tema-escuro .historico-vazio {
+  border-color: #374137;
+
+  background: #171d17;
+
+  color: #aeb9aa;
+}
+
+.tema-escuro .viagem-card {
+  border-color: #303a2f;
+
+  background: #171d17;
+
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.22);
+}
+
+.tema-escuro .viagem-pontos {
+  color: #f2f5f0;
+}
+
+.tema-escuro .viagem-data {
+  color: #7f8b7d;
+}
+
+.tema-escuro .viagem-info-rotulo {
+  color: #7f8b7d;
+}
+
+.tema-escuro .viagem-info span:last-child {
+  color: #dbe5d8;
+}
+
+.tema-escuro .status-concluida {
+  background: rgba(40, 117, 26, 0.18);
+
+  color: #7bd34c;
+}
+
+.tema-escuro .status-andamento {
+  background: rgba(138, 105, 20, 0.2);
+
+  color: #e8c369;
+}
+
+.tema-escuro .status-cancelada {
+  background: rgba(180, 35, 24, 0.2);
+
+  color: #ff8b7d;
+}
+
+
+/* =========================================================
+   RESPONSIVO - HISTÓRICO
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .viagem-card {
+    grid-template-columns: 1fr;
+
+    align-items: start;
+
+    gap: 14px;
+  }
+
+  .status-viagem {
+    justify-self: start;
+  }
+
+  .historico-controles {
+    flex-wrap: wrap;
+  }
+
+  .historico-busca input {
+    width: 100%;
+  }
+  
+
+}
