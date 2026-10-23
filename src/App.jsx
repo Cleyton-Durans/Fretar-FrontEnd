@@ -11,6 +11,7 @@ import Cadastro from "./pages/Cadastro";
 import Mapa from "./pages/Mapa";
 import ClientePainel from "./pages/ClientePainel";
 import MotoristaPainel from "./pages/MotoristaPainel";
+import Historico from "./pages/Historico";
 
 import "./App.css";
 
@@ -35,6 +36,15 @@ function App() {
         <Route path="/" element={<Inicio />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
+
+        <Route
+          path="/historico"
+          element={
+            <RotaProtegida>
+              <Historico />
+            </RotaProtegida>
+          }
+        />
 
         <Route
           path="/mapa"

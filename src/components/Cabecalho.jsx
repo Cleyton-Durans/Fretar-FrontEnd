@@ -30,6 +30,7 @@ function Cabecalho({ tema, aoAlternarTema }) {
         {logado && <Link to="/mapa">Mapa</Link>}
         {papel === "user" && <Link to="/cliente">Meus fretes</Link>}
         {papel === "driver" && <Link to="/motorista">Ofertas</Link>}
+        {logado && <Link to="/historico">Meu histórico</Link>}
         <a href="#como-funciona">Como funciona</a>
         <a href="#contato">Contato</a>
       </nav>
