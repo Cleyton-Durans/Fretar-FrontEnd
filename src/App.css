@@ -1718,3 +1718,113 @@
 .app.tema-escuro .btn-entrar:hover {
   background: #1b2b1c;
 }
+
+/* =========================================================
+   DOCUMENTOS LEGAIS
+========================================================= */
+
+.documentos-layout {
+  min-height: calc(100vh - 78px);
+  padding: 50px 6%;
+  background: #f4f7f2;
+}
+
+.documentos-card {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 42px;
+  border: 1px solid #e0e6dc;
+  border-radius: 20px;
+  background: #ffffff;
+  color: #172033;
+  box-shadow: 0 20px 55px rgba(20, 35, 20, 0.08);
+}
+
+.documentos-voltar {
+  margin-bottom: 25px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #438d1f;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.documentos-identificacao {
+  color: #438d1f;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.documentos-card h1 {
+  margin: 12px 0;
+  font-size: clamp(30px, 4vw, 42px);
+}
+
+.documentos-atualizacao {
+  margin-bottom: 30px;
+  color: #738094;
+  font-size: 13px;
+}
+
+.documentos-card h2 {
+  margin: 28px 0 10px;
+  font-size: 19px;
+}
+
+.documentos-card p {
+  line-height: 1.75;
+}
+
+.documentos-botao-voltar {
+  margin-top: 32px;
+}
+
+.rodape nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+}
+
+.rodape nav a {
+  color: #438d1f;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.rodape nav a:hover {
+  text-decoration: underline;
+}
+
+.app.tema-escuro .documentos-layout {
+  background: #0d140f;
+}
+
+.app.tema-escuro .documentos-card {
+  background: #151b16;
+  border-color: #29342b;
+  color: #f2f5f1;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.3);
+}
+
+.app.tema-escuro .documentos-atualizacao {
+  color: #aab5ac;
+}
+
+.app.tema-escuro .rodape nav a {
+  color: #75ca4b;
+}
+
+@media (max-width: 700px) {
+  .documentos-layout {
+    padding: 25px 16px;
+  }
+
+  .documentos-card {
+    padding: 24px 18px;
+    border-radius: 16px;
+  }
+}

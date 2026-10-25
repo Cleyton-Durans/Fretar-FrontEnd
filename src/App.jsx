@@ -1,14 +1,18 @@
-import { useState } from 'react'
+
+import { useEffect, useState } from 'react'
 
 import Cabecalho from './components/Cabecalho'
 import Rodape from './components/Rodape'
 import Login from './pages/Login'
 import Cadastro from './pages/Cadastro'
+import Documentos from './pages/Documentos'
+import Home from './pages/Home'
 
 import './App.css'
 
 function App() {
-  const [pagina, setPagina] = useState('login')
+  const [pagina, setPagina] = useState('inicio')
+  const [secaoPendente, setSecaoPendente] = useState(null)
 
   const [tema, setTema] = useState(() => {
     return localStorage.getItem('tema-fretar') || 'claro'
@@ -25,12 +29,13 @@ function App() {
     })
   }
 
-  function irParaCadastro(event) {
+  function navegar(novaPagina, event) {
     if (event) {
       event.preventDefault()
     }
 
-    setPagina('cadastro')
+    setSecaoPendente(null)
+    setPagina(novaPagina)
 
     window.scrollTo({
       top: 0,
@@ -38,28 +43,60 @@ function App() {
     })
   }
 
-  function irParaLogin(event) {
+  function irParaSecao(id, event) {
     if (event) {
       event.preventDefault()
     }
 
-    setPagina('login')
+    setSecaoPendente(id)
+    setPagina('inicio')
+  }
 
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
+  useEffect(() => {
+    if (pagina !== 'inicio' || !secaoPendente) {
+      return
+    }
+
+    const elemento = document.getElementById(secaoPendente)
+
+    if (elemento) {
+      elemento.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }
+
+    setSecaoPendente(null)
+  }, [pagina, secaoPendente])
+
+  function irParaCadastro(event) {
+    navegar('cadastro', event)
+  }
+
+  function irParaLogin(event) {
+    navegar('login', event)
+  }
+
+  function abrirDocumento(tipo, event) {
+    navegar(tipo, event)
   }
 
   return (
     <div className={`app tema-${tema}`}>
-
       <Cabecalho
         tema={tema}
         aoAlternarTema={alternarTema}
         onLogin={irParaLogin}
         onCadastro={irParaCadastro}
+        onSecao={irParaSecao}
       />
+
+      {pagina === 'inicio' && (
+        <Home
+          onLogin={irParaLogin}
+          onCadastro={irParaCadastro}
+        />
+      )}
 
       {pagina === 'login' && (
         <Login
@@ -72,11 +109,18 @@ function App() {
         <Cadastro
           tema={tema}
           onLogin={irParaLogin}
+          onDocumento={abrirDocumento}
         />
       )}
 
-      <Rodape />
+      {(pagina === 'termos' || pagina === 'privacidade') && (
+        <Documentos
+          tipo={pagina}
+          onVoltar={irParaCadastro}
+        />
+      )}
 
+      <Rodape onDocumento={abrirDocumento} />
     </div>
   )
 }

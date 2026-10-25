@@ -1,4 +1,5 @@
-function Rodape() {
+
+function Rodape({ onDocumento }) {
   const anoAtual = new Date().getFullYear()
 
   return (
@@ -7,9 +8,21 @@ function Rodape() {
         © {anoAtual} Fretar. Todos os direitos reservados.
       </p>
 
-      <a href="#privacidade">
-        Privacidade
-      </a>
+      <nav aria-label="Documentos legais">
+        <a
+          href="#termos"
+          onClick={(event) => onDocumento('termos', event)}
+        >
+          Termos de Uso
+        </a>
+
+        <a
+          href="#privacidade"
+          onClick={(event) => onDocumento('privacidade', event)}
+        >
+          Política de Privacidade
+        </a>
+      </nav>
     </footer>
   )
 }

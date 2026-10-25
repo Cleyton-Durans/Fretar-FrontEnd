@@ -1,17 +1,15 @@
+
 import { useState } from 'react'
 
 import logoFretar from '../assets/logo-fretar.png'
 import logoFretarClaro from '../assets/logo-fretar-claro.png'
 
-function Cadastro({ onLogin, tema }) {
+function Cadastro({ onLogin, tema, onDocumento }) {
   const [tipoConta, setTipoConta] = useState('cliente')
-
   const [mensagem, setMensagem] = useState('')
   const [tipoMensagem, setTipoMensagem] = useState('')
-
   const [mostrarSenha, setMostrarSenha] = useState(false)
   const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false)
-
   const [buscandoCep, setBuscandoCep] = useState(false)
 
   const [cliente, setCliente] = useState({
@@ -45,39 +43,20 @@ function Cadastro({ onLogin, tema }) {
     confirmarSenha: '',
     tipoVeiculo: '',
     placa: '',
-    renavam: ''
+    renavam: '',
+    termos: false
   })
 
-  /*
-    MODO ESCURO:
-    logo-fretar.png
-
-    MODO CLARO:
-    logo-fretar-claro.png
-  */
-
   const logoAtual =
-    tema === 'escuro'
-      ? logoFretar
-      : logoFretarClaro
+    tema === 'escuro' ? logoFretar : logoFretarClaro
 
   function alterarCliente(event) {
-    const {
-      name,
-      value,
-      type,
-      checked
-    } = event.target
+    const { name, value, type, checked } = event.target
 
-    let novoValor =
-      type === 'checkbox'
-        ? checked
-        : value
+    let novoValor = type === 'checkbox' ? checked : value
 
     if (name === 'cep') {
-      const cepLimpo = value
-        .replace(/\D/g, '')
-        .slice(0, 8)
+      const cepLimpo = value.replace(/\D/g, '').slice(0, 8)
 
       novoValor =
         cepLimpo.length > 5
@@ -85,27 +64,22 @@ function Cadastro({ onLogin, tema }) {
           : cepLimpo
     }
 
-    setCliente({
-      ...cliente,
+    setCliente((anterior) => ({
+      ...anterior,
       [name]: novoValor
-    })
+    }))
 
     setMensagem('')
     setTipoMensagem('')
   }
 
   function alterarFreteiro(event) {
-    const {
-      name,
-      value
-    } = event.target
+    const { name, value, type, checked } = event.target
 
-    let novoValor = value
+    let novoValor = type === 'checkbox' ? checked : value
 
     if (name === 'cep') {
-      const cepLimpo = value
-        .replace(/\D/g, '')
-        .slice(0, 8)
+      const cepLimpo = value.replace(/\D/g, '').slice(0, 8)
 
       novoValor =
         cepLimpo.length > 5
@@ -114,15 +88,13 @@ function Cadastro({ onLogin, tema }) {
     }
 
     if (name === 'renavam') {
-      novoValor = value
-        .replace(/\D/g, '')
-        .slice(0, 11)
+      novoValor = value.replace(/\D/g, '').slice(0, 11)
     }
 
-    setFreteiro({
-      ...freteiro,
+    setFreteiro((anterior) => ({
+      ...anterior,
       [name]: novoValor
-    })
+    }))
 
     setMensagem('')
     setTipoMensagem('')
@@ -151,25 +123,18 @@ function Cadastro({ onLogin, tema }) {
       cliente.confirmarSenha
     ]
 
-    const algumCampoVazio =
-      camposObrigatorios.some(
-        (campo) => campo.trim() === ''
-      )
+    const algumCampoVazio = camposObrigatorios.some(
+      (campo) => campo.trim() === ''
+    )
 
     if (algumCampoVazio) {
-      setMensagem(
-        '⚠️ Preencha todos os campos obrigatórios.'
-      )
-
+      setMensagem('⚠️ Preencha todos os campos obrigatórios.')
       setTipoMensagem('erro')
       return
     }
 
     if (cliente.cep.replace(/\D/g, '').length !== 8) {
-      setMensagem(
-        '⚠️ Digite um CEP válido com 8 números.'
-      )
-
+      setMensagem('⚠️ Digite um CEP válido com 8 números.')
       setTipoMensagem('erro')
       return
     }
@@ -178,36 +143,23 @@ function Cadastro({ onLogin, tema }) {
       setMensagem(
         '⚠️ Você precisa aceitar os Termos de Uso e a Política de Privacidade.'
       )
-
       setTipoMensagem('erro')
       return
     }
 
     if (cliente.senha.length < 6) {
-      setMensagem(
-        '⚠️ A senha deve ter pelo menos 6 caracteres.'
-      )
-
+      setMensagem('⚠️ A senha deve ter pelo menos 6 caracteres.')
       setTipoMensagem('erro')
       return
     }
 
-    if (
-      cliente.senha !==
-      cliente.confirmarSenha
-    ) {
-      setMensagem(
-        '⚠️ As senhas não são iguais.'
-      )
-
+    if (cliente.senha !== cliente.confirmarSenha) {
+      setMensagem('⚠️ As senhas não são iguais.')
       setTipoMensagem('erro')
       return
     }
 
-    setMensagem(
-      '✓ Cadastro de cliente válido!'
-    )
-
+    setMensagem('✓ Cadastro de cliente válido!')
     setTipoMensagem('sucesso')
   }
 
@@ -231,77 +183,57 @@ function Cadastro({ onLogin, tema }) {
       freteiro.renavam
     ]
 
-    const algumCampoVazio =
-      camposObrigatorios.some(
-        (campo) => campo.trim() === ''
-      )
+    const algumCampoVazio = camposObrigatorios.some(
+      (campo) => campo.trim() === ''
+    )
 
     if (algumCampoVazio) {
-      setMensagem(
-        '⚠️ Preencha todos os campos obrigatórios.'
-      )
-
+      setMensagem('⚠️ Preencha todos os campos obrigatórios.')
       setTipoMensagem('erro')
       return
     }
 
     if (freteiro.cep.replace(/\D/g, '').length !== 8) {
-      setMensagem(
-        '⚠️ Digite um CEP válido com 8 números.'
-      )
+      setMensagem('⚠️ Digite um CEP válido com 8 números.')
+      setTipoMensagem('erro')
+      return
+    }
 
+    if (!freteiro.termos) {
+      setMensagem(
+        '⚠️ Você precisa aceitar os Termos de Uso e a Política de Privacidade.'
+      )
       setTipoMensagem('erro')
       return
     }
 
     if (freteiro.renavam.length !== 11) {
-      setMensagem(
-        '⚠️ O RENAVAM deve ter 11 números.'
-      )
-
+      setMensagem('⚠️ O RENAVAM deve ter 11 números.')
       setTipoMensagem('erro')
       return
     }
 
     if (freteiro.senha.length < 6) {
-      setMensagem(
-        '⚠️ A senha deve ter pelo menos 6 caracteres.'
-      )
-
+      setMensagem('⚠️ A senha deve ter pelo menos 6 caracteres.')
       setTipoMensagem('erro')
       return
     }
 
-    if (
-      freteiro.senha !==
-      freteiro.confirmarSenha
-    ) {
-      setMensagem(
-        '⚠️ As senhas não são iguais.'
-      )
-
+    if (freteiro.senha !== freteiro.confirmarSenha) {
+      setMensagem('⚠️ As senhas não são iguais.')
       setTipoMensagem('erro')
       return
     }
 
-    setMensagem(
-      '✓ Cadastro de freteiro válido!'
-    )
-
+    setMensagem('✓ Cadastro de freteiro válido!')
     setTipoMensagem('sucesso')
   }
 
-  async function buscarCepCliente() {
-    const cepLimpo = cliente.cep.replace(
-      /\D/g,
-      ''
-    )
+  async function consultarCep(cep, atualizarEndereco) {
+    const cepLimpo = cep.replace(/\D/g, '')
 
     if (cepLimpo.length !== 8) {
-      setMensagem(
-        '⚠️ Digite um CEP válido com 8 números.'
-      )
-
+      setMensagem('⚠️ Digite um CEP válido com 8 números.')
       setTipoMensagem('erro')
       return
     }
@@ -316,144 +248,109 @@ function Cadastro({ onLogin, tema }) {
       )
 
       if (!resposta.ok) {
-        throw new Error(
-          'Erro ao consultar o CEP.'
-        )
+        throw new Error('Erro ao consultar o CEP.')
       }
 
       const dados = await resposta.json()
 
       if (dados.erro) {
-        setMensagem(
-          '⚠️ CEP não encontrado.'
-        )
-
+        setMensagem('⚠️ CEP não encontrado.')
         setTipoMensagem('erro')
         return
       }
 
-      setCliente({
-        ...cliente,
-
-        cep:
-          `${cepLimpo.slice(0, 5)}-${cepLimpo.slice(5)}`,
-
-        endereco:
-          dados.logradouro || '',
-
-        cidade:
-          dados.localidade || '',
-
-        estado:
-          dados.uf || ''
+      atualizarEndereco({
+        cep: `${cepLimpo.slice(0, 5)}-${cepLimpo.slice(5)}`,
+        endereco: dados.logradouro || '',
+        cidade: dados.localidade || '',
+        estado: dados.uf || ''
       })
 
       setMensagem(
         '✓ CEP encontrado! Endereço preenchido automaticamente.'
       )
-
       setTipoMensagem('sucesso')
-
     } catch {
       setMensagem(
         '❌ Não foi possível consultar o CEP. Verifique sua conexão e tente novamente.'
       )
-
       setTipoMensagem('erro')
-
     } finally {
       setBuscandoCep(false)
     }
   }
 
-  async function buscarCepFreteiro() {
-    const cepLimpo = freteiro.cep.replace(
-      /\D/g,
-      ''
+  function buscarCepCliente() {
+    consultarCep(cliente.cep, (dadosEndereco) => {
+      setCliente((anterior) => ({
+        ...anterior,
+        ...dadosEndereco
+      }))
+    })
+  }
+
+  function buscarCepFreteiro() {
+    consultarCep(freteiro.cep, (dadosEndereco) => {
+      setFreteiro((anterior) => ({
+        ...anterior,
+        ...dadosEndereco
+      }))
+    })
+  }
+
+  function abrirDocumento(tipo, event) {
+    if (onDocumento) {
+      onDocumento(tipo, event)
+    } else if (event) {
+      event.preventDefault()
+    }
+  }
+
+  function campoAceite(nome, aceito, alterar) {
+    return (
+      <label className="termos-cadastro">
+        <input
+          type="checkbox"
+          name="termos"
+          checked={aceito}
+          onChange={alterar}
+        />
+
+        <span>
+          Li e aceito os{' '}
+          <a
+            href="#termos"
+            onClick={(event) => {
+              event.stopPropagation()
+              abrirDocumento('termos', event)
+            }}
+          >
+            Termos de Uso
+          </a>{' '}
+          e a{' '}
+          <a
+            href="#privacidade"
+            onClick={(event) => {
+              event.stopPropagation()
+              abrirDocumento('privacidade', event)
+            }}
+          >
+            Política de Privacidade
+          </a>
+        </span>
+      </label>
     )
-
-    if (cepLimpo.length !== 8) {
-      setMensagem(
-        '⚠️ Digite um CEP válido com 8 números.'
-      )
-
-      setTipoMensagem('erro')
-      return
-    }
-
-    setBuscandoCep(true)
-    setMensagem('')
-    setTipoMensagem('')
-
-    try {
-      const resposta = await fetch(
-        `https://viacep.com.br/ws/${cepLimpo}/json/`
-      )
-
-      if (!resposta.ok) {
-        throw new Error(
-          'Erro ao consultar o CEP.'
-        )
-      }
-
-      const dados = await resposta.json()
-
-      if (dados.erro) {
-        setMensagem(
-          '⚠️ CEP não encontrado.'
-        )
-
-        setTipoMensagem('erro')
-        return
-      }
-
-      setFreteiro({
-        ...freteiro,
-
-        cep:
-          `${cepLimpo.slice(0, 5)}-${cepLimpo.slice(5)}`,
-
-        endereco:
-          dados.logradouro || '',
-
-        cidade:
-          dados.localidade || '',
-
-        estado:
-          dados.uf || ''
-      })
-
-      setMensagem(
-        '✓ CEP encontrado! Endereço preenchido automaticamente.'
-      )
-
-      setTipoMensagem('sucesso')
-
-    } catch {
-      setMensagem(
-        '❌ Não foi possível consultar o CEP. Verifique sua conexão e tente novamente.'
-      )
-
-      setTipoMensagem('erro')
-
-    } finally {
-      setBuscandoCep(false)
-    }
   }
 
   return (
     <main className="cadastro-layout">
-
       <section className="cadastro-apresentacao">
-
         <div className="cadastro-marca">
-
           <img
             src={logoAtual}
             alt="Fretar"
             className="logo-cadastro"
           />
-
         </div>
 
         <span className="cadastro-destaque">
@@ -471,87 +368,41 @@ function Cadastro({ onLogin, tema }) {
         </p>
 
         <div className="cadastro-beneficios">
-
           <div className="cadastro-beneficio">
-
-            <div className="cadastro-icone">
-              ✓
-            </div>
-
+            <div className="cadastro-icone">✓</div>
             <div>
-
-              <strong>
-                Seguro
-              </strong>
-
-              <span>
-                Seus dados protegidos com segurança.
-              </span>
-
+              <strong>Seguro</strong>
+              <span>Seus dados protegidos com segurança.</span>
             </div>
-
           </div>
 
           <div className="cadastro-beneficio">
-
-            <div className="cadastro-icone">
-              ⚡
-            </div>
-
+            <div className="cadastro-icone">⚡</div>
             <div>
-
-              <strong>
-                Rápido
-              </strong>
-
-              <span>
-                Cadastro simples e rápido.
-              </span>
-
+              <strong>Rápido</strong>
+              <span>Cadastro simples e rápido.</span>
             </div>
-
           </div>
 
           <div className="cadastro-beneficio">
-
-            <div className="cadastro-icone">
-              🚚
-            </div>
-
+            <div className="cadastro-icone">🚚</div>
             <div>
-
-              <strong>
-                Confiável
-              </strong>
-
+              <strong>Confiável</strong>
               <span>
                 Encontre as melhores soluções para seus fretes.
               </span>
-
             </div>
-
           </div>
-
         </div>
-
       </section>
 
       <section className="cadastro-card">
-
         <div className="cadastro-titulo">
-
-          <h2>
-            Criar conta
-          </h2>
-
-          <p>
-            Escolha como deseja usar a plataforma
-          </p>
-
+          <h2>Criar conta</h2>
+          <p>Escolha como deseja usar a plataforma</p>
         </div>
 
         <div className="cadastro-tipos">
-
           <button
             type="button"
             className={
@@ -559,9 +410,7 @@ function Cadastro({ onLogin, tema }) {
                 ? 'tipo-conta ativo'
                 : 'tipo-conta'
             }
-            onClick={() =>
-              trocarTipoConta('cliente')
-            }
+            onClick={() => trocarTipoConta('cliente')}
           >
             👤 Sou cliente
           </button>
@@ -573,57 +422,32 @@ function Cadastro({ onLogin, tema }) {
                 ? 'tipo-conta ativo'
                 : 'tipo-conta'
             }
-            onClick={() =>
-              trocarTipoConta('freteiro')
-            }
+            onClick={() => trocarTipoConta('freteiro')}
           >
             🚚 Sou freteiro
           </button>
-
         </div>
 
         {mensagem && (
-          <div
-            className={`mensagem-cadastro ${tipoMensagem}`}
-          >
+          <div className={`mensagem-cadastro ${tipoMensagem}`}>
             {mensagem}
           </div>
         )}
 
         {tipoConta === 'cliente' && (
-
           <div className="cadastro-formulario">
-
             <div className="titulo-formulario">
-
-              <div className="icone-titulo">
-                👤
-              </div>
-
+              <div className="icone-titulo">👤</div>
               <div>
-
-                <h2>
-                  Cadastro de Cliente
-                </h2>
-
-                <p>
-                  Preencha seus dados pessoais
-                </p>
-
+                <h2>Cadastro de Cliente</h2>
+                <p>Preencha seus dados pessoais</p>
               </div>
-
             </div>
 
             <form onSubmit={cadastrarCliente}>
-
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro">
-
-                  <label htmlFor="clienteNome">
-                    Nome completo
-                  </label>
-
+                  <label htmlFor="clienteNome">Nome completo</label>
                   <input
                     id="clienteNome"
                     name="nome"
@@ -632,15 +456,10 @@ function Cadastro({ onLogin, tema }) {
                     value={cliente.nome}
                     onChange={alterarCliente}
                   />
-
                 </div>
 
                 <div className="campo-cadastro">
-
-                  <label htmlFor="clienteTelefone">
-                    Telefone
-                  </label>
-
+                  <label htmlFor="clienteTelefone">Telefone</label>
                   <input
                     id="clienteTelefone"
                     name="telefone"
@@ -649,19 +468,12 @@ function Cadastro({ onLogin, tema }) {
                     value={cliente.telefone}
                     onChange={alterarCliente}
                   />
-
                 </div>
-
               </div>
 
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro">
-
-                  <label htmlFor="clienteEmail">
-                    E-mail
-                  </label>
-
+                  <label htmlFor="clienteEmail">E-mail</label>
                   <input
                     id="clienteEmail"
                     name="email"
@@ -670,15 +482,10 @@ function Cadastro({ onLogin, tema }) {
                     value={cliente.email}
                     onChange={alterarCliente}
                   />
-
                 </div>
 
                 <div className="campo-cadastro">
-
-                  <label htmlFor="clienteCpf">
-                    CPF
-                  </label>
-
+                  <label htmlFor="clienteCpf">CPF</label>
                   <input
                     id="clienteCpf"
                     name="cpf"
@@ -687,19 +494,12 @@ function Cadastro({ onLogin, tema }) {
                     value={cliente.cpf}
                     onChange={alterarCliente}
                   />
-
                 </div>
-
               </div>
 
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro campo-grande">
-
-                  <label htmlFor="clienteEndereco">
-                    Endereço
-                  </label>
-
+                  <label htmlFor="clienteEndereco">Endereço</label>
                   <input
                     id="clienteEndereco"
                     name="endereco"
@@ -708,15 +508,10 @@ function Cadastro({ onLogin, tema }) {
                     value={cliente.endereco}
                     onChange={alterarCliente}
                   />
-
                 </div>
 
                 <div className="campo-cadastro">
-
-                  <label htmlFor="clienteNumero">
-                    Número
-                  </label>
-
+                  <label htmlFor="clienteNumero">Número</label>
                   <input
                     id="clienteNumero"
                     name="numero"
@@ -725,19 +520,14 @@ function Cadastro({ onLogin, tema }) {
                     value={cliente.numero}
                     onChange={alterarCliente}
                   />
-
                 </div>
-
               </div>
 
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro">
-
                   <label htmlFor="clienteComplemento">
                     Complemento <span>(opcional)</span>
                   </label>
-
                   <input
                     id="clienteComplemento"
                     name="complemento"
@@ -746,15 +536,10 @@ function Cadastro({ onLogin, tema }) {
                     value={cliente.complemento}
                     onChange={alterarCliente}
                   />
-
                 </div>
 
                 <div className="campo-cadastro">
-
-                  <label htmlFor="clienteCep">
-                    CEP
-                  </label>
-
+                  <label htmlFor="clienteCep">CEP</label>
                   <input
                     id="clienteCep"
                     name="cep"
@@ -765,34 +550,23 @@ function Cadastro({ onLogin, tema }) {
                     maxLength="9"
                     inputMode="numeric"
                   />
-
                 </div>
-
               </div>
 
               <div className="cep-botao-container">
-
                 <button
                   type="button"
                   className="btn-cep"
                   onClick={buscarCepCliente}
                   disabled={buscandoCep}
                 >
-                  {buscandoCep
-                    ? 'Buscando...'
-                    : 'Buscar CEP'}
+                  {buscandoCep ? 'Buscando...' : 'Buscar CEP'}
                 </button>
-
               </div>
 
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro">
-
-                  <label htmlFor="clienteCidade">
-                    Cidade
-                  </label>
-
+                  <label htmlFor="clienteCidade">Cidade</label>
                   <input
                     id="clienteCidade"
                     name="cidade"
@@ -801,217 +575,111 @@ function Cadastro({ onLogin, tema }) {
                     value={cliente.cidade}
                     onChange={alterarCliente}
                   />
-
                 </div>
 
                 <div className="campo-cadastro">
-
-                  <label htmlFor="clienteEstado">
-                    Estado
-                  </label>
-
+                  <label htmlFor="clienteEstado">Estado</label>
                   <select
                     id="clienteEstado"
                     name="estado"
                     value={cliente.estado}
                     onChange={alterarCliente}
                   >
-
-                    <option value="">
-                      Selecione
-                    </option>
-
-                    <option value="RS">
-                      Rio Grande do Sul
-                    </option>
-
-                    <option value="SC">
-                      Santa Catarina
-                    </option>
-
-                    <option value="PR">
-                      Paraná
-                    </option>
-
-                    <option value="SP">
-                      São Paulo
-                    </option>
-
+                    <option value="">Selecione</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="PR">Paraná</option>
+                    <option value="SP">São Paulo</option>
                   </select>
-
                 </div>
-
               </div>
 
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro">
-
-                  <label htmlFor="clienteSenha">
-                    Criar uma senha
-                  </label>
-
+                  <label htmlFor="clienteSenha">Criar uma senha</label>
                   <div className="campo-senha">
-
                     <input
                       id="clienteSenha"
                       name="senha"
-                      type={
-                        mostrarSenha
-                          ? 'text'
-                          : 'password'
-                      }
+                      type={mostrarSenha ? 'text' : 'password'}
                       placeholder="Mínimo 6 caracteres"
                       value={cliente.senha}
                       onChange={alterarCliente}
                     />
-
                     <button
                       type="button"
                       className="botao-olho"
-                      onClick={() =>
-                        setMostrarSenha(
-                          !mostrarSenha
-                        )
+                      onClick={() => setMostrarSenha(!mostrarSenha)}
+                      aria-label={
+                        mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'
                       }
                     >
-                      {mostrarSenha
-                        ? '🙈'
-                        : '👁'}
+                      {mostrarSenha ? '🙈' : '👁'}
                     </button>
-
                   </div>
-
                 </div>
 
                 <div className="campo-cadastro">
-
                   <label htmlFor="clienteConfirmarSenha">
                     Confirmar senha
                   </label>
-
                   <div className="campo-senha">
-
                     <input
                       id="clienteConfirmarSenha"
                       name="confirmarSenha"
-                      type={
-                        mostrarConfirmacao
-                          ? 'text'
-                          : 'password'
-                      }
+                      type={mostrarConfirmacao ? 'text' : 'password'}
                       placeholder="Confirme sua senha"
                       value={cliente.confirmarSenha}
                       onChange={alterarCliente}
                     />
-
                     <button
                       type="button"
                       className="botao-olho"
                       onClick={() =>
-                        setMostrarConfirmacao(
-                          !mostrarConfirmacao
-                        )
+                        setMostrarConfirmacao(!mostrarConfirmacao)
+                      }
+                      aria-label={
+                        mostrarConfirmacao
+                          ? 'Ocultar confirmação de senha'
+                          : 'Mostrar confirmação de senha'
                       }
                     >
-                      {mostrarConfirmacao
-                        ? '🙈'
-                        : '👁'}
+                      {mostrarConfirmacao ? '🙈' : '👁'}
                     </button>
-
                   </div>
-
                 </div>
-
               </div>
 
-              <label className="termos-cadastro">
+              {campoAceite('termos', cliente.termos, alterarCliente)}
 
-                <input
-                  type="checkbox"
-                  name="termos"
-                  checked={cliente.termos}
-                  onChange={alterarCliente}
-                />
-
-                <span>
-                  Li e aceito os{' '}
-
-                  <a href="#termos">
-                    Termos de Uso
-                  </a>{' '}
-
-                  e a{' '}
-
-                  <a href="#privacidade">
-                    Política de Privacidade
-                  </a>
-                </span>
-
-              </label>
-
-              <button
-                type="submit"
-                className="btn-cadastrar"
-              >
+              <button type="submit" className="btn-cadastrar">
                 👤 Cadastrar
               </button>
-
             </form>
 
             <div className="login-link">
-
-              <span>
-                Já tem uma conta?{' '}
-              </span>
-
-              <button
-                type="button"
-                onClick={onLogin}
-              >
-                Faça login
+              <span>Já tem uma conta? </span>
+              <button type="button" onClick={onLogin}>
+                Entre
               </button>
-
             </div>
-
           </div>
-
         )}
 
         {tipoConta === 'freteiro' && (
-
           <div className="cadastro-formulario">
-
             <div className="titulo-formulario">
-
-              <div className="icone-titulo">
-                🚚
-              </div>
-
+              <div className="icone-titulo">🚚</div>
               <div>
-
-                <h2>
-                  Cadastro de Freteiro
-                </h2>
-
-                <p>
-                  Cadastre seus dados e seu veículo
-                </p>
-
+                <h2>Cadastro de Freteiro</h2>
+                <p>Cadastre seus dados e seu veículo</p>
               </div>
-
             </div>
 
             <form onSubmit={cadastrarFreteiro}>
-
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro">
-
-                  <label htmlFor="freteiroNome">
-                    Nome completo
-                  </label>
-
+                  <label htmlFor="freteiroNome">Nome completo</label>
                   <input
                     id="freteiroNome"
                     name="nome"
@@ -1020,15 +688,10 @@ function Cadastro({ onLogin, tema }) {
                     value={freteiro.nome}
                     onChange={alterarFreteiro}
                   />
-
                 </div>
 
                 <div className="campo-cadastro">
-
-                  <label htmlFor="freteiroEmail">
-                    E-mail
-                  </label>
-
+                  <label htmlFor="freteiroEmail">E-mail</label>
                   <input
                     id="freteiroEmail"
                     name="email"
@@ -1037,19 +700,12 @@ function Cadastro({ onLogin, tema }) {
                     value={freteiro.email}
                     onChange={alterarFreteiro}
                   />
-
                 </div>
-
               </div>
 
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro">
-
-                  <label htmlFor="freteiroTelefone">
-                    Telefone
-                  </label>
-
+                  <label htmlFor="freteiroTelefone">Telefone</label>
                   <input
                     id="freteiroTelefone"
                     name="telefone"
@@ -1058,15 +714,10 @@ function Cadastro({ onLogin, tema }) {
                     value={freteiro.telefone}
                     onChange={alterarFreteiro}
                   />
-
                 </div>
 
                 <div className="campo-cadastro">
-
-                  <label htmlFor="freteiroCpf">
-                    CPF
-                  </label>
-
+                  <label htmlFor="freteiroCpf">CPF</label>
                   <input
                     id="freteiroCpf"
                     name="cpf"
@@ -1075,19 +726,12 @@ function Cadastro({ onLogin, tema }) {
                     value={freteiro.cpf}
                     onChange={alterarFreteiro}
                   />
-
                 </div>
-
               </div>
 
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro campo-grande">
-
-                  <label htmlFor="freteiroEndereco">
-                    Endereço
-                  </label>
-
+                  <label htmlFor="freteiroEndereco">Endereço</label>
                   <input
                     id="freteiroEndereco"
                     name="endereco"
@@ -1096,15 +740,10 @@ function Cadastro({ onLogin, tema }) {
                     value={freteiro.endereco}
                     onChange={alterarFreteiro}
                   />
-
                 </div>
 
                 <div className="campo-cadastro">
-
-                  <label htmlFor="freteiroNumero">
-                    Número
-                  </label>
-
+                  <label htmlFor="freteiroNumero">Número</label>
                   <input
                     id="freteiroNumero"
                     name="numero"
@@ -1113,19 +752,14 @@ function Cadastro({ onLogin, tema }) {
                     value={freteiro.numero}
                     onChange={alterarFreteiro}
                   />
-
                 </div>
-
               </div>
 
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro">
-
                   <label htmlFor="freteiroComplemento">
                     Complemento <span>(opcional)</span>
                   </label>
-
                   <input
                     id="freteiroComplemento"
                     name="complemento"
@@ -1134,15 +768,10 @@ function Cadastro({ onLogin, tema }) {
                     value={freteiro.complemento}
                     onChange={alterarFreteiro}
                   />
-
                 </div>
 
                 <div className="campo-cadastro">
-
-                  <label htmlFor="freteiroCep">
-                    CEP
-                  </label>
-
+                  <label htmlFor="freteiroCep">CEP</label>
                   <input
                     id="freteiroCep"
                     name="cep"
@@ -1153,34 +782,23 @@ function Cadastro({ onLogin, tema }) {
                     maxLength="9"
                     inputMode="numeric"
                   />
-
                 </div>
-
               </div>
 
               <div className="cep-botao-container">
-
                 <button
                   type="button"
                   className="btn-cep"
                   onClick={buscarCepFreteiro}
                   disabled={buscandoCep}
                 >
-                  {buscandoCep
-                    ? 'Buscando...'
-                    : 'Buscar CEP'}
+                  {buscandoCep ? 'Buscando...' : 'Buscar CEP'}
                 </button>
-
               </div>
 
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro">
-
-                  <label htmlFor="freteiroCidade">
-                    Cidade
-                  </label>
-
+                  <label htmlFor="freteiroCidade">Cidade</label>
                   <input
                     id="freteiroCidade"
                     name="cidade"
@@ -1189,179 +807,101 @@ function Cadastro({ onLogin, tema }) {
                     value={freteiro.cidade}
                     onChange={alterarFreteiro}
                   />
-
                 </div>
 
                 <div className="campo-cadastro">
-
-                  <label htmlFor="freteiroEstado">
-                    Estado
-                  </label>
-
+                  <label htmlFor="freteiroEstado">Estado</label>
                   <select
                     id="freteiroEstado"
                     name="estado"
                     value={freteiro.estado}
                     onChange={alterarFreteiro}
                   >
-
-                    <option value="">
-                      Selecione
-                    </option>
-
-                    <option value="RS">
-                      Rio Grande do Sul
-                    </option>
-
-                    <option value="SC">
-                      Santa Catarina
-                    </option>
-
-                    <option value="PR">
-                      Paraná
-                    </option>
-
-                    <option value="SP">
-                      São Paulo
-                    </option>
-
+                    <option value="">Selecione</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="PR">Paraná</option>
+                    <option value="SP">São Paulo</option>
                   </select>
-
                 </div>
-
               </div>
 
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro">
-
-                  <label htmlFor="freteiroSenha">
-                    Senha
-                  </label>
-
+                  <label htmlFor="freteiroSenha">Senha</label>
                   <div className="campo-senha">
-
                     <input
                       id="freteiroSenha"
                       name="senha"
-                      type={
-                        mostrarSenha
-                          ? 'text'
-                          : 'password'
-                      }
+                      type={mostrarSenha ? 'text' : 'password'}
                       placeholder="Mínimo 6 caracteres"
                       value={freteiro.senha}
                       onChange={alterarFreteiro}
                     />
-
                     <button
                       type="button"
                       className="botao-olho"
-                      onClick={() =>
-                        setMostrarSenha(
-                          !mostrarSenha
-                        )
+                      onClick={() => setMostrarSenha(!mostrarSenha)}
+                      aria-label={
+                        mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'
                       }
                     >
-                      {mostrarSenha
-                        ? '🙈'
-                        : '👁'}
+                      {mostrarSenha ? '🙈' : '👁'}
                     </button>
-
                   </div>
-
                 </div>
 
                 <div className="campo-cadastro">
-
                   <label htmlFor="freteiroConfirmarSenha">
                     Confirmar senha
                   </label>
-
                   <div className="campo-senha">
-
                     <input
                       id="freteiroConfirmarSenha"
                       name="confirmarSenha"
-                      type={
-                        mostrarConfirmacao
-                          ? 'text'
-                          : 'password'
-                      }
+                      type={mostrarConfirmacao ? 'text' : 'password'}
                       placeholder="Confirme sua senha"
                       value={freteiro.confirmarSenha}
                       onChange={alterarFreteiro}
                     />
-
                     <button
                       type="button"
                       className="botao-olho"
                       onClick={() =>
-                        setMostrarConfirmacao(
-                          !mostrarConfirmacao
-                        )
+                        setMostrarConfirmacao(!mostrarConfirmacao)
+                      }
+                      aria-label={
+                        mostrarConfirmacao
+                          ? 'Ocultar confirmação de senha'
+                          : 'Mostrar confirmação de senha'
                       }
                     >
-                      {mostrarConfirmacao
-                        ? '🙈'
-                        : '👁'}
+                      {mostrarConfirmacao ? '🙈' : '👁'}
                     </button>
-
                   </div>
-
                 </div>
-
               </div>
 
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro">
-
-                  <label htmlFor="tipoVeiculo">
-                    Tipo de veículo
-                  </label>
-
+                  <label htmlFor="tipoVeiculo">Tipo de veículo</label>
                   <select
                     id="tipoVeiculo"
                     name="tipoVeiculo"
                     value={freteiro.tipoVeiculo}
                     onChange={alterarFreteiro}
                   >
-
-                    <option value="">
-                      Selecione
-                    </option>
-
-                    <option value="moto">
-                      Moto
-                    </option>
-
-                    <option value="carro">
-                      Carro
-                    </option>
-
-                    <option value="caminhonete">
-                      Caminhonete
-                    </option>
-
-                    <option value="van">
-                      Van
-                    </option>
-
-                    <option value="caminhao">
-                      Caminhão
-                    </option>
-
+                    <option value="">Selecione</option>
+                    <option value="moto">Moto</option>
+                    <option value="carro">Carro</option>
+                    <option value="caminhonete">Caminhonete</option>
+                    <option value="van">Van</option>
+                    <option value="caminhao">Caminhão</option>
                   </select>
-
                 </div>
 
                 <div className="campo-cadastro">
-
-                  <label htmlFor="freteiroPlaca">
-                    Placa
-                  </label>
-
+                  <label htmlFor="freteiroPlaca">Placa</label>
                   <input
                     id="freteiroPlaca"
                     name="placa"
@@ -1370,19 +910,12 @@ function Cadastro({ onLogin, tema }) {
                     value={freteiro.placa}
                     onChange={alterarFreteiro}
                   />
-
                 </div>
-
               </div>
 
               <div className="linha-cadastro">
-
                 <div className="campo-cadastro campo-grande">
-
-                  <label htmlFor="freteiroRenavam">
-                    RENAVAM
-                  </label>
-
+                  <label htmlFor="freteiroRenavam">RENAVAM</label>
                   <input
                     id="freteiroRenavam"
                     name="renavam"
@@ -1393,41 +926,25 @@ function Cadastro({ onLogin, tema }) {
                     maxLength="11"
                     inputMode="numeric"
                   />
-
                 </div>
-
               </div>
 
-              <button
-                type="submit"
-                className="btn-cadastrar"
-              >
+              {campoAceite('termos', freteiro.termos, alterarFreteiro)}
+
+              <button type="submit" className="btn-cadastrar">
                 🚚 Cadastrar
               </button>
-
             </form>
 
             <div className="login-link">
-
-              <span>
-                Já tem uma conta?{' '}
-              </span>
-
-              <button
-                type="button"
-                onClick={onLogin}
-              >
-                Faça login
+              <span>Já tem uma conta? </span>
+              <button type="button" onClick={onLogin}>
+                Entrar
               </button>
-
             </div>
-
           </div>
-
         )}
-
       </section>
-
     </main>
   )
 }
