@@ -8,7 +8,14 @@ import RotaProtegida from "./components/RotaProtegida";
 import Inicio from "./pages/Inicio";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
+<<<<<<< Updated upstream
 import Mapa from "./pages/Mapa";
+=======
+import ComoFunciona from "./pages/ComoFunciona";
+import Contato from "./pages/Contato";
+import Privacidade from "./pages/Privacidade";
+import Historico from "./pages/Historico";
+>>>>>>> Stashed changes
 import ClientePainel from "./pages/ClientePainel";
 import MotoristaPainel from "./pages/MotoristaPainel";
 import Historico from "./pages/Historico";
@@ -36,6 +43,7 @@ function App() {
         <Route path="/" element={<Inicio />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
+<<<<<<< Updated upstream
 
         <Route
           path="/historico"
@@ -46,11 +54,16 @@ function App() {
           }
         />
 
+=======
+        <Route path="/como-funciona" element={<ComoFunciona />} />
+        <Route path="/contato" element={<Contato />} />
+        <Route path="/privacidade" element={<Privacidade />} />
+>>>>>>> Stashed changes
         <Route
-          path="/mapa"
+          path="/historico"
           element={
             <RotaProtegida>
-              <Mapa />
+              <Historico tema={tema} />
             </RotaProtegida>
           }
         />
