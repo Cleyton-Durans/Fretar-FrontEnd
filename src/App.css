@@ -2142,3 +2142,243 @@
   
 
 }
+/* =========================================================
+   PÁGINAS INSTITUCIONAIS
+========================================================= */
+
+.pagina-institucional-layout {
+  flex: 1;
+  width: 100%;
+  padding: 70px 7% 90px;
+
+  background:
+    radial-gradient(
+      circle at 18% 20%,
+      rgba(73, 163, 27, 0.1),
+      transparent 34%
+    ),
+    #f4f7f2;
+}
+
+.app.tema-escuro .pagina-institucional-layout {
+  background:
+    radial-gradient(
+      circle at 18% 20%,
+      rgba(73, 163, 27, 0.16),
+      transparent 34%
+    ),
+    #0d140f;
+}
+
+.pagina-institucional {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.pagina-institucional-hero {
+  max-width: 780px;
+  margin-bottom: 46px;
+}
+
+.pagina-institucional-hero h1 {
+  margin-bottom: 18px;
+
+  color: #172033;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.06;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+}
+
+.app.tema-escuro .pagina-institucional-hero h1 {
+  color: #f4f7f2;
+}
+
+.pagina-institucional-hero p {
+  max-width: 680px;
+
+  color: #506078;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.app.tema-escuro .pagina-institucional-hero p {
+  color: #b8c3b9;
+}
+
+.pagina-institucional-nota {
+  margin-top: 12px;
+  font-size: 13px !important;
+  font-weight: 700;
+}
+
+.pagina-institucional-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.pagina-institucional-secao {
+  margin-top: 42px;
+}
+
+.pagina-institucional-secao > h2 {
+  margin-bottom: 18px;
+
+  color: #172033;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.app.tema-escuro .pagina-institucional-secao > h2 {
+  color: #f4f7f2;
+}
+
+.pagina-institucional-duas-colunas,
+.pagina-institucional-faq,
+.pagina-institucional-texto {
+  display: grid;
+  gap: 18px;
+}
+
+.pagina-institucional-duas-colunas,
+.pagina-institucional-faq {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.pagina-institucional-texto {
+  grid-template-columns: 1fr;
+}
+
+.pagina-institucional-card {
+  padding: 26px;
+
+  border: 1px solid #e0e6dc;
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  box-shadow: 0 10px 30px rgba(20, 35, 20, 0.04);
+}
+
+.app.tema-escuro .pagina-institucional-card {
+  background: #151b16;
+  border-color: #29342b;
+  box-shadow: none;
+}
+
+.pagina-institucional-card h2,
+.pagina-institucional-card h3 {
+  margin-bottom: 12px;
+
+  color: #172033;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.app.tema-escuro .pagina-institucional-card h2,
+.app.tema-escuro .pagina-institucional-card h3 {
+  color: #eef4ed;
+}
+
+.pagina-institucional-card p {
+  margin-bottom: 10px;
+
+  color: #506078;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.pagina-institucional-card p:last-child {
+  margin-bottom: 0;
+}
+
+.app.tema-escuro .pagina-institucional-card p {
+  color: #b8c3b9;
+}
+
+.pagina-institucional-card a {
+  color: #438d1f;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pagina-institucional-card a:hover {
+  text-decoration: underline;
+}
+
+.app.tema-escuro .pagina-institucional-card a {
+  color: #63c43a;
+}
+
+.pagina-institucional-numero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+  margin-bottom: 16px;
+
+  border-radius: 50%;
+
+  background: #eef8e9;
+  color: #438d1f;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.app.tema-escuro .pagina-institucional-numero {
+  background: #1b2b1c;
+  color: #63c43a;
+}
+
+.pagina-institucional-lista {
+  display: grid;
+  gap: 9px;
+
+  padding-left: 20px;
+
+  color: #506078;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.pagina-institucional-lista li::marker {
+  color: #4c9828;
+}
+
+.app.tema-escuro .pagina-institucional-lista {
+  color: #b8c3b9;
+}
+
+.pagina-institucional-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  margin-top: 40px;
+}
+
+@media (max-width: 700px) {
+  .pagina-institucional-layout {
+    padding: 45px 5% 60px;
+  }
+
+  .pagina-institucional-hero {
+    margin-bottom: 32px;
+  }
+
+  .pagina-institucional-card {
+    padding: 22px 18px;
+  }
+
+  .pagina-institucional-cta .btn-criar,
+  .pagina-institucional-cta .btn-entrar {
+    flex: 1;
+  }
+}

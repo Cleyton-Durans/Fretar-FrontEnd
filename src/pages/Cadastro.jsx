@@ -122,7 +122,13 @@ function Cadastro() {
             password: dados.senha,
             password_confirmation: dados.confirmarSenha,
             phone: dados.telefone,
-            address: [dados.endereco, dados.numero].filter(Boolean).join(", "),
+            address: [
+              [dados.endereco, dados.numero].filter(Boolean).join(", "),
+              [dados.cidade, dados.estado].filter(Boolean).join("/"),
+              dados.cep ? `CEP ${dados.cep}` : "",
+            ]
+              .filter(Boolean)
+              .join(" - "),
           },
           comAuth: false,
         });
@@ -491,7 +497,7 @@ function Cadastro() {
               />
               <span>
                 Li e aceito os <a href="#termos">Termos de Uso</a> e a{" "}
-                <a href="#privacidade">Política de Privacidade</a>
+                <Link to="/privacidade">Política de Privacidade</Link>
               </span>
             </label>
           )}

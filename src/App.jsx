@@ -8,8 +8,10 @@ import RotaProtegida from "./components/RotaProtegida";
 import Inicio from "./pages/Inicio";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
+import ComoFunciona from "./pages/ComoFunciona";
+import Contato from "./pages/Contato";
+import Privacidade from "./pages/Privacidade";
 import Historico from "./pages/Historico";
-import Mapa from "./pages/Mapa";
 import ClientePainel from "./pages/ClientePainel";
 import MotoristaPainel from "./pages/MotoristaPainel";
 
@@ -36,13 +38,14 @@ function App() {
         <Route path="/" element={<Inicio />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/historico" element={<Historico tema={tema} />} />
-
+        <Route path="/como-funciona" element={<ComoFunciona />} />
+        <Route path="/contato" element={<Contato />} />
+        <Route path="/privacidade" element={<Privacidade />} />
         <Route
-          path="/mapa"
+          path="/historico"
           element={
             <RotaProtegida>
-              <Mapa />
+              <Historico tema={tema} />
             </RotaProtegida>
           }
         />
