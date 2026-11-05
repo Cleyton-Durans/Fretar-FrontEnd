@@ -143,6 +143,7 @@ function Cadastro() {
   const camposFreteiro = [
     dados.nome,
     dados.email,
+    dados.cpf,
     dados.telefone,
     dados.cnh,
     dados.senha,
