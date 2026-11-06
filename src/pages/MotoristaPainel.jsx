@@ -9,13 +9,6 @@ import SimulacaoTrajeto, {
 
 const INTERVALO_POLLING_MS = 3000;
 
-const ROTULO_TIPO_PIX = {
-  cpf: "CPF",
-  email: "E-mail",
-  phone: "Celular",
-  random: "Chave aleatória",
-};
-
 function formatarMoeda(valor) {
   return Number(valor || 0).toLocaleString("pt-BR", {
     style: "currency",
@@ -190,24 +183,6 @@ function MotoristaPainel() {
 
       {erro && <div className="mensagem-cadastro erro">{erro}</div>}
       {mensagem && <div className="mensagem-cadastro sucesso">{mensagem}</div>}
-
-      <section className="painel-card perfil-card">
-        <h3>Meus dados</h3>
-        <ul className="perfil-lista">
-          <li>
-            <span>📍 Área de atuação</span>
-            <strong>{usuario?.address || "Não informado"}</strong>
-          </li>
-          <li>
-            <span>💸 Recebimento</span>
-            <strong>
-              {usuario?.pix_key_type
-                ? `Pix · ${ROTULO_TIPO_PIX[usuario.pix_key_type] || usuario.pix_key_type} ${usuario.pix_key_hint || ""}`
-                : "Não cadastrado"}
-            </strong>
-          </li>
-        </ul>
-      </section>
 
       <section className="painel-card">
         <h3>Ofertas recebidas</h3>

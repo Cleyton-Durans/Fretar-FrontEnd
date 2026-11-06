@@ -2,79 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../lib/api";
 
-const ESTADOS = [
-  ["AC", "Acre"], ["AL", "Alagoas"], ["AP", "Amapá"], ["AM", "Amazonas"],
-  ["BA", "Bahia"], ["CE", "Ceará"], ["DF", "Distrito Federal"],
-  ["ES", "Espírito Santo"], ["GO", "Goiás"], ["MA", "Maranhão"],
-  ["MT", "Mato Grosso"], ["MS", "Mato Grosso do Sul"], ["MG", "Minas Gerais"],
-  ["PA", "Pará"], ["PB", "Paraíba"], ["PR", "Paraná"], ["PE", "Pernambuco"],
-  ["PI", "Piauí"], ["RJ", "Rio de Janeiro"], ["RN", "Rio Grande do Norte"],
-  ["RS", "Rio Grande do Sul"], ["RO", "Rondônia"], ["RR", "Roraima"],
-  ["SC", "Santa Catarina"], ["SP", "São Paulo"], ["SE", "Sergipe"],
-  ["TO", "Tocantins"],
-];
-
-const TIPOS_PIX = {
-  cpf: { rotulo: "CPF", placeholder: "000.000.000-00" },
-  email: { rotulo: "E-mail", placeholder: "seuemail@exemplo.com" },
-  phone: { rotulo: "Celular", placeholder: "(00) 00000-0000" },
-  random: { rotulo: "Chave aleatória", placeholder: "Cole a chave aleatória" },
-};
-
-function somenteDigitos(valor) {
-  return String(valor || "").replace(/\D/g, "");
-}
-
-function cpfValido(valor) {
-  const cpf = somenteDigitos(valor);
-  if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
-
-  for (const tamanho of [9, 10]) {
-    let soma = 0;
-    for (let i = 0; i < tamanho; i += 1) {
-      soma += Number(cpf[i]) * (tamanho + 1 - i);
-    }
-    const digito = ((soma * 10) % 11) % 10;
-    if (digito !== Number(cpf[tamanho])) return false;
-  }
-  return true;
-}
-
-// Devolve { chave } normalizada ou { erro } com a mensagem para o usuario.
-function validarChavePix(tipo, valor) {
-  const texto = String(valor || "").trim();
-
-  if (tipo === "cpf") {
-    return cpfValido(texto)
-      ? { chave: somenteDigitos(texto) }
-      : { erro: "CPF da chave Pix inválido." };
-  }
-  if (tipo === "email") {
-    return /^\S+@\S+\.\S+$/.test(texto)
-      ? { chave: texto.toLowerCase() }
-      : { erro: "E-mail da chave Pix inválido." };
-  }
-  if (tipo === "phone") {
-    const digitos = somenteDigitos(texto);
-    return digitos.length === 10 || digitos.length === 11
-      ? { chave: digitos }
-      : { erro: "Celular da chave Pix inválido (use DDD + número)." };
-  }
-  return /^[0-9a-fA-F-]{32,36}$/.test(texto)
-    ? { chave: texto.toLowerCase() }
-    : { erro: "Chave aleatória inválida (32 a 36 caracteres)." };
-}
-
-function montarEndereco(dados) {
-  return [
-    [dados.endereco, dados.numero].filter(Boolean).join(", "),
-    [dados.cidade, dados.estado].filter(Boolean).join("/"),
-    dados.cep ? `CEP ${dados.cep}` : "",
-  ]
-    .filter(Boolean)
-    .join(" - ");
-}
-
 function Cadastro() {
   const navigate = useNavigate();
 
@@ -98,8 +25,6 @@ function Cadastro() {
     placa: "",
     cnh: "",
     capacidade: "",
-    tipoPix: "cpf",
-    chavePix: "",
     termos: false,
   });
 
@@ -143,7 +68,6 @@ function Cadastro() {
   const camposFreteiro = [
     dados.nome,
     dados.email,
-    dados.cpf,
     dados.telefone,
     dados.cnh,
     dados.senha,
@@ -151,12 +75,6 @@ function Cadastro() {
     dados.tipoVeiculo,
     dados.placa,
     dados.capacidade,
-    dados.endereco,
-    dados.numero,
-    dados.cep,
-    dados.cidade,
-    dados.estado,
-    dados.chavePix,
   ];
 
   async function cadastrar(event) {
@@ -183,16 +101,6 @@ function Cadastro() {
       return;
     }
 
-    let pix = null;
-    if (tipoConta !== "cliente") {
-      pix = validarChavePix(dados.tipoPix, dados.chavePix);
-      if (pix.erro) {
-        setMensagem(`⚠️ ${pix.erro}`);
-        setTipoMensagem("erro");
-        return;
-      }
-    }
-
     if (tipoConta === "cliente" && !dados.termos) {
       setMensagem(
         "⚠️ Você precisa aceitar os Termos de Uso e a Política de Privacidade."
@@ -214,7 +122,13 @@ function Cadastro() {
             password: dados.senha,
             password_confirmation: dados.confirmarSenha,
             phone: dados.telefone,
-            address: montarEndereco(dados),
+            address: [
+              [dados.endereco, dados.numero].filter(Boolean).join(", "),
+              [dados.cidade, dados.estado].filter(Boolean).join("/"),
+              dados.cep ? `CEP ${dados.cep}` : "",
+            ]
+              .filter(Boolean)
+              .join(" - "),
           },
           comAuth: false,
         });
@@ -227,9 +141,6 @@ function Cadastro() {
             password: dados.senha,
             password_confirmation: dados.confirmarSenha,
             phone: dados.telefone,
-            address: montarEndereco(dados),
-            pix_key_type: dados.tipoPix,
-            pix_key: pix.chave,
             cnh: dados.cnh,
             vehicle_type: dados.tipoVeiculo,
             license_plate: dados.placa,
@@ -384,12 +295,11 @@ function Cadastro() {
             )}
           </div>
 
-          <>
+          {ehCliente && (
+            <>
               <div className="linha-cadastro">
                 <div className="campo-cadastro">
-                  <label htmlFor="endereco">
-                    {ehCliente ? "Endereço" : "Endereço (onde você atua)"}
-                  </label>
+                  <label htmlFor="endereco">Endereço</label>
                   <input
                     id="endereco"
                     name="endereco"
@@ -460,15 +370,15 @@ function Cadastro() {
                     onChange={alterarDados}
                   >
                     <option value="">Selecione</option>
-                    {ESTADOS.map(([sigla, nome]) => (
-                      <option key={sigla} value={sigla}>
-                        {nome}
-                      </option>
-                    ))}
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="PR">Paraná</option>
+                    <option value="SP">São Paulo</option>
                   </select>
                 </div>
               </div>
-          </>
+            </>
+          )}
 
           {!ehCliente && (
             <div className="linha-cadastro">
@@ -483,6 +393,8 @@ function Cadastro() {
                   onChange={alterarDados}
                 />
               </div>
+            </div>
+          )}
 
               <div className="campo-cadastro">
                 <label htmlFor="capacidade">Capacidade de carga (kg)</label>
@@ -529,45 +441,6 @@ function Cadastro() {
                   value={dados.placa}
                   onChange={alterarDados}
                 />
-              </div>
-            </div>
-          )}
-
-          {!ehCliente && (
-            <div className="pix-bloco">
-              <h4>💸 Como você quer receber?</h4>
-              <p className="pix-nota">
-                Cadastre sua chave Pix para receber os pagamentos dos fretes.
-              </p>
-
-              <div className="linha-cadastro">
-                <div className="campo-cadastro">
-                  <label htmlFor="tipoPix">Tipo da chave Pix</label>
-                  <select
-                    id="tipoPix"
-                    name="tipoPix"
-                    value={dados.tipoPix}
-                    onChange={alterarDados}
-                  >
-                    {Object.entries(TIPOS_PIX).map(([valor, info]) => (
-                      <option key={valor} value={valor}>
-                        {info.rotulo}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="campo-cadastro">
-                  <label htmlFor="chavePix">Chave Pix</label>
-                  <input
-                    id="chavePix"
-                    name="chavePix"
-                    type="text"
-                    placeholder={TIPOS_PIX[dados.tipoPix].placeholder}
-                    value={dados.chavePix}
-                    onChange={alterarDados}
-                  />
-                </div>
               </div>
             </div>
           )}

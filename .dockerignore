@@ -1,8 +1,2 @@
-vendor/
-.env
-.git
-.gitignore
-storage/framework/cache/data/*
-storage/framework/sessions/*
-storage/framework/views/*
-storage/logs/*
+node_modules/
+dist/

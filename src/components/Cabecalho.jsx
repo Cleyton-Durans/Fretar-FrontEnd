@@ -27,10 +27,9 @@ function Cabecalho({ tema, aoAlternarTema }) {
 
       <nav className="menu" aria-label="Navegação principal">
         <Link to="/">Início</Link>
-        {logado && <Link to="/mapa">Mapa</Link>}
+        <Link to="/historico">Meu histórico</Link>
         {papel === "user" && <Link to="/cliente">Meus fretes</Link>}
         {papel === "driver" && <Link to="/motorista">Ofertas</Link>}
-        {logado && <Link to="/historico">Meu histórico</Link>}
         <Link to="/como-funciona">Como funciona</Link>
         <Link to="/contato">Contato</Link>
       </nav>
@@ -49,11 +48,7 @@ function Cabecalho({ tema, aoAlternarTema }) {
         </button>
 
         {logado ? (
-          <button
-            className="btn-entrar"
-            type="button"
-            onClick={sairERedirecionar}
-          >
+          <button className="btn-entrar" type="button" onClick={sairERedirecionar}>
             Sair
           </button>
         ) : (

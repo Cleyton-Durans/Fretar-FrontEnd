@@ -141,8 +141,8 @@ function Historico() {
         }
 
         const buscaNome = esMotorista
-          ? viagem.usuario?.toLowerCase().includes(termo)
-          : viagem.motorista.toLowerCase().includes(termo)
+          ? viagem.usuario.toLowerCase().includes(termo)
+          : viagem.motorista.toLowerCase().includes(termo);
 
         return (
           viagem.origem.toLowerCase().includes(termo) ||

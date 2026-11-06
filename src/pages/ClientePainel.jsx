@@ -3,33 +3,16 @@ import { useCallback, useEffect, useState } from "react";
 import { api } from "../lib/api";
 import { useSessao } from "../context/SessaoContext";
 import SeletorRota from "../components/SeletorRota";
-import MetodosPagamento from "../components/MetodosPagamento";
-import { rotuloMetodo } from "../lib/pagamento";
-import { obterStripe, stripeAtivo } from "../lib/stripe";
 import SimulacaoTrajeto, {
   temCoordenadas,
   simulacaoEmAndamento,
 } from "../components/SimulacaoTrajeto";
 
+const VALOR_BASE = 20;
+const TARIFA_POR_KM = 2.5;
 const INTERVALO_POLLING_MS = 3000;
 
 const STATUS_CANCELAVEIS = ["pending", "searching_driver", "driver_assigned"];
-
-const ICONES_VEICULO = {
-  moto: "🏍️",
-  carro: "🚗",
-  caminhonete: "🛻",
-  van: "🚐",
-  caminhao: "🚚",
-};
-
-const ROTULO_VEICULO = {
-  moto: "Moto",
-  carro: "Carro",
-  caminhonete: "Caminhonete",
-  van: "Van",
-  caminhao: "Caminhão",
-};
 
 function formatarMoeda(valor) {
   return Number(valor || 0).toLocaleString("pt-BR", {
@@ -38,17 +21,11 @@ function formatarMoeda(valor) {
   });
 }
 
-// Previa do preco (distancia x tarifa por km, com valor minimo). Quem define o
-// valor de verdade e o servidor; a tarifa vem do back (GET /tarifa).
-function calcularEstimativa(distanciaKm, tarifa) {
-  if (!distanciaKm || !tarifa) return null;
-
-  const bruto = Number((distanciaKm * tarifa.price_per_km).toFixed(2));
-
-  return {
-    valor: Math.max(tarifa.min_price, bruto),
-    minimoAplicado: bruto < tarifa.min_price,
-  };
+function calcularValorSugerido(distanciaKm) {
+  if (!distanciaKm) {
+    return VALOR_BASE;
+  }
+  return Math.max(VALOR_BASE, Number((distanciaKm * TARIFA_POR_KM).toFixed(2)));
 }
 
 function extrairLista(dados) {
@@ -70,10 +47,9 @@ function ClientePainel() {
   const [selecao, setSelecao] = useState(null);
   const [aboutLoad, setAboutLoad] = useState("");
   const [veiculo, setVeiculo] = useState("");
-  const [tarifa, setTarifa] = useState(null);
-  const [tarifaErro, setTarifaErro] = useState(false);
+  const [valor, setValor] = useState(VALOR_BASE);
+  const [valorManual, setValorManual] = useState(false);
   const [criando, setCriando] = useState(false);
-  const [metodoPagamento, setMetodoPagamento] = useState(null);
 
   const [emProcessamento, setEmProcessamento] = useState(null);
   const [avaliando, setAvaliando] = useState(null);
@@ -114,24 +90,10 @@ function ClientePainel() {
   }, []);
 
   useEffect(() => {
-    let ativo = true;
-
-    api("/tarifa")
-      .then((dados) => {
-        if (ativo) setTarifa(dados);
-      })
-      .catch(() => {
-        if (ativo) setTarifaErro(true);
-      });
-
-    return () => {
-      ativo = false;
-    };
-  }, []);
-
-  // cada tipo de veiculo tem a sua tarifa por km
-  const tarifaVeiculo = tarifa?.vehicles?.[veiculo] || null;
-  const estimativa = calcularEstimativa(selecao?.distanciaKm, tarifaVeiculo);
+    if (!valorManual) {
+      setValor(calcularValorSugerido(selecao?.distanciaKm));
+    }
+  }, [selecao?.distanciaKm, valorManual]);
 
   async function criarFrete(event) {
     event.preventDefault();
@@ -140,11 +102,6 @@ function ClientePainel() {
 
     if (!selecao?.rotuloOrigem || !selecao?.rotuloDestino) {
       setErro("Selecione a origem e o destino no mapa antes de criar o frete.");
-      return;
-    }
-
-    if (!veiculo) {
-      setErro("Escolha o tipo de veículo para calcular o valor do frete.");
       return;
     }
 
@@ -161,17 +118,17 @@ function ClientePainel() {
           destination_lat: selecao.destino?.[0] ?? null,
           destination_lng: selecao.destino?.[1] ?? null,
           about_load: aboutLoad || null,
-          recommended_vehicle: veiculo,
-          // o valor NAO e enviado: o servidor calcula pela distancia
-          distance_km: selecao.distanciaKm ?? null,
+          recommended_vehicle: veiculo || null,
+          value: Number(valor) || 0,
         },
       });
 
       setMensagem(
-        `Frete #${frete.id} criado por ${formatarMoeda(frete.value)}. Clique em "Procurar motoristas" para ofertar.`
+        `Frete #${frete.id} criado. Clique em "Procurar motoristas" para ofertar.`
       );
       setAboutLoad("");
       setVeiculo("");
+      setValorManual(false);
       setSelecao(null);
       setChaveSeletor((atual) => atual + 1);
 
@@ -237,54 +194,14 @@ function ClientePainel() {
 
   function pagarFrete(frete) {
     comProcessamento(frete.id, async () => {
-      // usa a forma escolhida na carteira
-      let metodo = metodoPagamento;
+      const metodo = await garantirMetodoPagamento();
 
-      if (!metodo) {
-        // com a Stripe ativa nao existe cartao "de mentira": exige um cartao real
-        if (stripeAtivo) {
-          throw new Error(
-            'Adicione um cartão em "Forma de pagamento" antes de pagar.'
-          );
-        }
-
-        metodo = await garantirMetodoPagamento();
-      }
-
-      let pagamento = await api(`/shippings/${frete.id}/payments`, {
+      const pagamento = await api(`/shippings/${frete.id}/payments`, {
         metodo: "POST",
         corpo: { payment_method_id: metodo.id },
       });
 
-      if (pagamento.payment_status !== "succeeded") {
-        pagamento = await api(`/payments/${pagamento.id}/confirmar`, {
-          metodo: "POST",
-        });
-      }
-
-      // o banco pediu autenticacao do cartao (3D Secure): a Stripe abre a janela
-      if (pagamento.payment_status === "processing" && pagamento.client_secret) {
-        const stripe = await obterStripe();
-        const { error } = await stripe.handleNextAction({
-          clientSecret: pagamento.client_secret,
-        });
-
-        if (error) {
-          throw new Error(
-            error.message || "A autenticação do cartão não foi concluída."
-          );
-        }
-
-        pagamento = await api(`/payments/${pagamento.id}/confirmar`, {
-          metodo: "POST",
-        });
-      }
-
-      if (pagamento.payment_status !== "succeeded") {
-        throw new Error(
-          `Pagamento não aprovado (${pagamento.payment_status_label || pagamento.payment_status}).`
-        );
-      }
+      await api(`/payments/${pagamento.id}/confirmar`, { metodo: "POST" });
 
       setMensagem(`Pagamento de ${formatarMoeda(frete.value)} aprovado.`);
       await carregarFretes({ silencioso: true });
@@ -359,65 +276,45 @@ function ClientePainel() {
               />
             </div>
 
-            <div className="campo-cadastro">
-              <label>Tipo de veículo</label>
-
-              {tarifa?.vehicles ? (
-                <div className="veiculos-lista">
-                  {Object.entries(tarifa.vehicles).map(([chave, info]) => {
-                    const previa = calcularEstimativa(selecao?.distanciaKm, info);
-                    const ativo = chave === veiculo;
-
-                    return (
-                      <button
-                        key={chave}
-                        type="button"
-                        className={ativo ? "veiculo-card ativo" : "veiculo-card"}
-                        aria-pressed={ativo}
-                        onClick={() => setVeiculo(chave)}
-                      >
-                        <span className="veiculo-icone">
-                          {ICONES_VEICULO[chave] || "🚚"}
-                        </span>
-                        <span className="veiculo-info">
-                          <strong>{info.label}</strong>
-                          <small>{formatarMoeda(info.price_per_km)}/km</small>
-                        </span>
-                        <span className="veiculo-preco">
-                          {previa ? formatarMoeda(previa.valor) : "—"}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              ) : (
-                <p className="pagamento-vazio">
-                  {tarifaErro
-                    ? "Não foi possível carregar as tarifas. Atualize a página."
-                    : "Carregando tarifas..."}
-                </p>
-              )}
-            </div>
-
-            <div className="preco-box">
-              <div className="preco-linha">
-                <span>Valor do frete</span>
-                <strong>{estimativa ? formatarMoeda(estimativa.valor) : "—"}</strong>
+            <div className="linha-cadastro">
+              <div className="campo-cadastro">
+                <label htmlFor="veiculo">Veículo recomendado</label>
+                <select
+                  id="veiculo"
+                  value={veiculo}
+                  onChange={(event) => setVeiculo(event.target.value)}
+                >
+                  <option value="">Selecione</option>
+                  <option value="moto">Moto</option>
+                  <option value="carro">Carro</option>
+                  <option value="caminhonete">Caminhonete</option>
+                  <option value="van">Van</option>
+                  <option value="caminhao">Caminhão</option>
+                </select>
               </div>
-              <small>
-                {estimativa
-                  ? `${selecao.distanciaKm} km × ${formatarMoeda(tarifaVeiculo.price_per_km)}/km (${tarifaVeiculo.label})${estimativa.minimoAplicado ? ` · valor mínimo de ${formatarMoeda(tarifaVeiculo.min_price)}` : ""}`
-                  : !veiculo
-                    ? "Escolha o tipo de veículo."
-                    : "Marque origem e destino no mapa para calcular."}
-              </small>
-              <small>
-                Calculado pela distância e pelo tipo de veículo, igual para
-                todos. O servidor confirma o valor ao solicitar.
-              </small>
+
+              <div className="campo-cadastro">
+                <label htmlFor="valor">Valor estimado (R$)</label>
+                <input
+                  id="valor"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={valor}
+                  onChange={(event) => {
+                    setValor(event.target.value);
+                    setValorManual(true);
+                  }}
+                />
+              </div>
             </div>
 
-            <MetodosPagamento aoEscolher={setMetodoPagamento} />
+            <p className="painel-estimativa">
+              Estimativa: {formatarMoeda(valor)} ·{" "}
+              {selecao?.distanciaKm
+                ? `${selecao.distanciaKm} km × ${formatarMoeda(TARIFA_POR_KM)}/km (mín. ${formatarMoeda(VALOR_BASE)})`
+                : "selecione a rota para calcular"}
+            </p>
 
             <button
               type="submit"
@@ -463,13 +360,6 @@ function ClientePainel() {
 
                   <div className="frete-meta">
                     <span>{formatarMoeda(frete.value)}</span>
-                    {frete.distance_km ? <span>{frete.distance_km} km</span> : null}
-                    {frete.recommended_vehicle ? (
-                      <span>
-                        {ROTULO_VEICULO[frete.recommended_vehicle] ||
-                          frete.recommended_vehicle}
-                      </span>
-                    ) : null}
                     {frete.driver?.name && (
                       <span>Motorista: {frete.driver.name}</span>
                     )}
@@ -514,9 +404,7 @@ function ClientePainel() {
                             disabled={ocupado}
                             onClick={() => pagarFrete(frete)}
                           >
-                            {ocupado
-                              ? "..."
-                              : `Pagar ${formatarMoeda(frete.value)}${metodoPagamento ? ` · ${rotuloMetodo(metodoPagamento)}` : ""}`}
+                            {ocupado ? "..." : `Pagar ${formatarMoeda(frete.value)}`}
                           </button>
                         )}
 
