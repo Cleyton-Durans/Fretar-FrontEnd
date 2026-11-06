@@ -393,6 +393,8 @@ function Cadastro() {
                   onChange={alterarDados}
                 />
               </div>
+            </div>
+          )}
 
               <div className="campo-cadastro">
                 <label htmlFor="capacidade">Capacidade de carga (kg)</label>
