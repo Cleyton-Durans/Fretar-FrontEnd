@@ -9,6 +9,13 @@ import SimulacaoTrajeto, {
 
 const INTERVALO_POLLING_MS = 3000;
 
+const ROTULO_TIPO_PIX = {
+  cpf: "CPF",
+  email: "E-mail",
+  phone: "Celular",
+  random: "Chave aleatória",
+};
+
 function formatarMoeda(valor) {
   return Number(valor || 0).toLocaleString("pt-BR", {
     style: "currency",
@@ -47,7 +54,25 @@ function MotoristaPainel() {
   const [mensagem, setMensagem] = useState("");
   const [emProcessamento, setEmProcessamento] = useState(null);
 
-  const avaliacoes = ofertas
+  // Defesa extra (o back ja filtra): so aparece a oferta que ainda vale para ESTE motorista.
+  // Corrida aceita por outro motorista, cancelada ou em andamento com outro some da tela.
+  const ofertasVisiveis = ofertas.filter((oferta) => {
+    const frete = oferta.shipping;
+
+    if (!frete) return false;
+
+    if (oferta.offer_status === "pending") {
+      return frete.status === "searching_driver";
+    }
+
+    if (oferta.offer_status === "accepted") {
+      return frete.driver?.id === usuario?.id;
+    }
+
+    return oferta.offer_status === "rejected";
+  });
+
+  const avaliacoes = ofertasVisiveis
     .map((oferta) => oferta.shipping?.avaliacao)
     .filter(Boolean);
   const notaMedia = avaliacoes.length
@@ -184,6 +209,24 @@ function MotoristaPainel() {
       {erro && <div className="mensagem-cadastro erro">{erro}</div>}
       {mensagem && <div className="mensagem-cadastro sucesso">{mensagem}</div>}
 
+      <section className="painel-card perfil-card">
+        <h3>Meus dados</h3>
+        <ul className="perfil-lista">
+          <li>
+            <span>📍 Área de atuação</span>
+            <strong>{usuario?.address || "Não informado"}</strong>
+          </li>
+          <li>
+            <span>💸 Recebimento</span>
+            <strong>
+              {usuario?.pix_key_type
+                ? `Pix · ${ROTULO_TIPO_PIX[usuario.pix_key_type] || usuario.pix_key_type} ${usuario.pix_key_hint || ""}`
+                : "Não cadastrado"}
+            </strong>
+          </li>
+        </ul>
+      </section>
+
       <section className="painel-card">
         <h3>Ofertas recebidas</h3>
         <p className="painel-sub">
@@ -192,14 +235,14 @@ function MotoristaPainel() {
 
         {carregando && <p className="painel-vazio">Carregando ofertas...</p>}
 
-        {!carregando && ofertas.length === 0 && (
+        {!carregando && ofertasVisiveis.length === 0 && (
           <p className="painel-vazio">
             Nenhuma oferta no momento. Aguarde novas solicitações.
           </p>
         )}
 
         <ul className="painel-lista">
-          {ofertas.map((oferta) => {
+          {ofertasVisiveis.map((oferta) => {
             const frete = oferta.shipping;
             const ocupado = emProcessamento === frete.id;
             const simEmAndamento = simulacaoEmAndamento(frete);
@@ -282,7 +325,9 @@ function MotoristaPainel() {
                     <span className="frete-badge">Recusada</span>
                   )}
 
-                  {temCoordenadas(frete) && (simEmAndamento || podeSimular) && (
+                  {oferta.offer_status === "accepted" &&
+                    temCoordenadas(frete) &&
+                    (simEmAndamento || podeSimular) && (
                     <button
                       type="button"
                       className={

@@ -11,8 +11,8 @@ function Cabecalho({ tema, aoAlternarTema }) {
 
   const estaNoModoEscuro = tema === "escuro";
 
-  function sairERedirecionar() {
-    sair();
+  async function sairERedirecionar() {
+    await sair();
     navigate("/");
   }
 
@@ -30,8 +30,9 @@ function Cabecalho({ tema, aoAlternarTema }) {
         {logado && <Link to="/mapa">Mapa</Link>}
         {papel === "user" && <Link to="/cliente">Meus fretes</Link>}
         {papel === "driver" && <Link to="/motorista">Ofertas</Link>}
-        <a href="#como-funciona">Como funciona</a>
-        <a href="#contato">Contato</a>
+        {logado && <Link to="/historico">Meu histórico</Link>}
+        <Link to="/como-funciona">Como funciona</Link>
+        <Link to="/contato">Contato</Link>
       </nav>
 
       <div className="acoes-header">
@@ -48,7 +49,11 @@ function Cabecalho({ tema, aoAlternarTema }) {
         </button>
 
         {logado ? (
-          <button className="btn-entrar" type="button" onClick={sairERedirecionar}>
+          <button
+            className="btn-entrar"
+            type="button"
+            onClick={sairERedirecionar}
+          >
             Sair
           </button>
         ) : (

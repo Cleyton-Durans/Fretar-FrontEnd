@@ -1,0 +1,465 @@
+
+.fretar-home {
+  --home-verde: #64d21f;
+  --home-texto: #172033;
+  --home-texto-secundario: #5d6878;
+  --home-fundo: #f4f7f2;
+  --home-cartao: #ffffff;
+  --home-borda: #e1e8dd;
+
+  color: var(--home-texto);
+  background: var(--home-fundo);
+}
+
+.app.tema-escuro .fretar-home {
+  --home-texto: #f0f1f2;
+  --home-texto-secundario: #c0c9bf;
+  --home-fundo: #050b10;
+  --home-cartao: #10171e;
+  --home-borda: #29342b;
+}
+
+.fretar-home * {
+  box-sizing: border-box;
+}
+
+.fretar-home section[id] {
+  scroll-margin-top: 28px;
+}
+
+.home-hero {
+  min-height: 540px;
+  padding: 76px 8%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  align-items: center;
+  gap: 48px;
+  background:
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(100, 210, 31, 0.15),
+      transparent 38%
+    );
+}
+
+.home-hero-conteudo {
+  max-width: 650px;
+}
+
+.home-etiqueta {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #4c9828;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+}
+
+.app.tema-escuro .home-etiqueta {
+  color: #8be45a;
+}
+
+.home-hero h1 {
+  margin: 0 0 22px;
+  font-size: clamp(38px, 5vw, 66px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+}
+
+.home-hero h1 span {
+  display: block;
+  color: #54b919;
+}
+
+.home-hero-conteudo > p:not(.home-aviso) {
+  max-width: 590px;
+  color: var(--home-texto-secundario);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.home-botoes {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.home-botao-principal,
+.home-botao-secundario {
+  min-height: 48px;
+  padding: 13px 22px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 750;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.home-botao-principal {
+  color: #10200b;
+  background: var(--home-verde);
+}
+
+.home-botao-principal:hover {
+  background: #54b919;
+  transform: translateY(-2px);
+}
+
+.home-botao-secundario {
+  color: var(--home-texto);
+  background: transparent;
+  border-color: var(--home-borda);
+}
+
+.home-botao-secundario:hover {
+  border-color: var(--home-verde);
+  transform: translateY(-2px);
+}
+
+.home-aviso {
+  max-width: 520px;
+  margin-top: 24px;
+  color: var(--home-texto-secundario);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.home-hero-visual {
+  min-height: 330px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+}
+
+.home-visual-circulo {
+  width: 190px;
+  height: 190px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(100, 210, 31, 0.35);
+  border-radius: 50%;
+  background: rgba(100, 210, 31, 0.08);
+  box-shadow: 0 0 0 24px rgba(100, 210, 31, 0.035);
+}
+
+.home-visual-icone {
+  color: #54b919;
+  font-size: 100px;
+  font-weight: 900;
+  letter-spacing: -8px;
+}
+
+.home-visual-cartao {
+  width: 100%;
+  max-width: 390px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--home-borda);
+  border-radius: 14px;
+  background: var(--home-cartao);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
+}
+
+.home-visual-cartao strong,
+.home-visual-cartao small {
+  display: block;
+}
+
+.home-visual-cartao strong {
+  font-size: 13px;
+}
+
+.home-visual-cartao small {
+  margin-top: 5px;
+  color: var(--home-texto-secundario);
+  font-size: 10px;
+}
+
+.home-visual-ponto {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--home-verde);
+}
+
+.home-visual-seta {
+  color: #54b919;
+  font-size: 23px;
+}
+
+.home-secao {
+  padding: 76px 8%;
+}
+
+.home-como-funciona,
+.home-seguranca {
+  background: var(--home-cartao);
+}
+
+.home-secao-cabecalho {
+  max-width: 760px;
+  margin: 0 auto 38px;
+  text-align: center;
+}
+
+.home-secao h2,
+.home-sobre h2,
+.home-contato h2 {
+  margin: 0 0 18px;
+  font-size: clamp(28px, 3.5vw, 42px);
+  line-height: 1.2;
+  letter-spacing: -1px;
+}
+
+.home-secao-cabecalho > p,
+.home-bloco-destaque p,
+.home-sobre-texto p,
+.home-contato > p {
+  color: var(--home-texto-secundario);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.home-grade {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.home-grade-dois {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 900px;
+}
+
+.home-card {
+  padding: 28px;
+  border: 1px solid var(--home-borda);
+  border-radius: 14px;
+  background: var(--home-fundo);
+}
+
+.home-card-numero {
+  display: inline-block;
+  margin-bottom: 22px;
+  color: #54b919;
+  font-size: 27px;
+  font-weight: 850;
+}
+
+.home-card h3 {
+  margin: 0 0 12px;
+  font-size: 19px;
+}
+
+.home-card p {
+  margin: 0;
+  color: var(--home-texto-secundario);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.home-motoristas {
+  background:
+    radial-gradient(
+      circle at 90% 50%,
+      rgba(100, 210, 31, 0.12),
+      transparent 38%
+    );
+}
+
+.home-bloco-destaque {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px;
+  align-items: center;
+  gap: 45px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.home-bloco-destaque h2 {
+  max-width: 700px;
+}
+
+.home-lista {
+  display: grid;
+  gap: 12px;
+  padding-left: 22px;
+  color: var(--home-texto-secundario);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.home-lista li::marker {
+  color: #54b919;
+}
+
+.home-motoristas-icone {
+  width: 210px;
+  height: 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(100, 210, 31, 0.35);
+  border-radius: 28px;
+  background: var(--home-cartao);
+  transform: rotate(3deg);
+}
+
+.home-motoristas-icone span {
+  color: #54b919;
+  font-size: 90px;
+  font-weight: 900;
+}
+
+.home-motoristas-icone small {
+  color: var(--home-texto-secundario);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.home-nota {
+  max-width: 760px;
+  margin: 28px auto 0;
+  color: var(--home-texto-secundario);
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.home-sobre {
+  display: grid;
+  grid-template-columns: minmax(200px, 0.7fr) minmax(0, 1.3fr);
+  align-items: center;
+  gap: 50px;
+}
+
+.home-sobre-marca {
+  color: var(--home-texto);
+  font-size: clamp(38px, 6vw, 68px);
+  font-weight: 900;
+  letter-spacing: -4px;
+}
+
+.home-sobre-marca span {
+  color: #54b919;
+}
+
+.home-sobre-texto {
+  max-width: 700px;
+}
+
+.home-contato {
+  text-align: center;
+  background: var(--home-cartao);
+}
+
+.home-contato > p {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.home-botoes-centro {
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+    padding: 60px 6%;
+  }
+
+  .home-hero-visual {
+    min-height: 260px;
+  }
+
+  .home-grade {
+    grid-template-columns: 1fr;
+  }
+
+  .home-grade-dois {
+    grid-template-columns: 1fr;
+  }
+
+  .home-bloco-destaque {
+    grid-template-columns: 1fr;
+  }
+
+  .home-motoristas-icone {
+    width: 160px;
+    height: 160px;
+  }
+
+  .home-motoristas-icone span {
+    font-size: 65px;
+  }
+
+  .home-sobre {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-hero,
+  .home-secao {
+    padding: 48px 20px;
+  }
+
+  .home-hero h1 {
+    font-size: 40px;
+    letter-spacing: -1.3px;
+  }
+
+  .home-hero-conteudo > p:not(.home-aviso) {
+    font-size: 15px;
+  }
+
+  .home-visual-circulo {
+    width: 145px;
+    height: 145px;
+  }
+
+  .home-visual-icone {
+    font-size: 78px;
+  }
+
+  .home-visual-cartao {
+    gap: 8px;
+    padding: 14px;
+  }
+
+  .home-visual-cartao small {
+    font-size: 9px;
+  }
+
+  .home-botoes {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .home-botao-principal,
+  .home-botao-secundario {
+    width: 100%;
+  }
+
+  .home-sobre-marca {
+    font-size: 46px;
+  }
+}

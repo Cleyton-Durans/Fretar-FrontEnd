@@ -1,4 +1,8 @@
-// Acesso ao Nominatim via proxy /geocode do Vite (evita CORS).
+// Nominatim: em desenvolvimento usa o proxy /geocode do Vite (evita CORS);
+// em producao (Vercel) chama o Nominatim direto do navegador.
+const BASE_GEOCODE = import.meta.env.DEV
+  ? "/geocode"
+  : "https://nominatim.openstreetmap.org";
 
 export async function buscarEnderecos(consulta) {
   const texto = consulta.trim();
@@ -9,7 +13,7 @@ export async function buscarEnderecos(consulta) {
 
   try {
     const url =
-      "/geocode/search" +
+      BASE_GEOCODE + "/search" +
       `?format=json&addressdetails=1&limit=5&accept-language=pt-BR` +
       `&q=${encodeURIComponent(texto)}`;
 
@@ -29,7 +33,7 @@ export async function buscarEnderecos(consulta) {
 export async function enderecoPorCoordenadas(lat, lng) {
   try {
     const url =
-      "/geocode/reverse" +
+      BASE_GEOCODE + "/reverse" +
       `?format=json&zoom=16&accept-language=pt-BR&lat=${lat}&lon=${lng}`;
 
     const resposta = await fetch(url);

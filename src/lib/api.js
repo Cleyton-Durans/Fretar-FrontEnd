@@ -57,11 +57,21 @@ export async function api(
     }
   }
 
-  const resposta = await fetch(`${API_URL}${caminho}`, {
-    method: metodo,
-    headers: cabecalhos,
-    body: corpo ? JSON.stringify(corpo) : null,
-  });
+  let resposta;
+
+  try {
+    resposta = await fetch(`${API_URL}${caminho}`, {
+      method: metodo,
+      headers: cabecalhos,
+      body: corpo ? JSON.stringify(corpo) : null,
+    });
+  } catch {
+    const erro = new Error(
+      "Não foi possível conectar ao servidor. Verifique sua internet e tente novamente."
+    );
+    erro.status = 0;
+    throw erro;
+  }
 
   let dados = {};
   try {
@@ -71,7 +81,13 @@ export async function api(
   }
 
   if (!resposta.ok) {
-    const erro = new Error(extrairMensagemErro(dados));
+    // erro do servidor (5xx): mostra um aviso amigavel; o detalhe fica no log do back
+    const mensagem =
+      resposta.status >= 500
+        ? "O servidor está indisponível ou iniciando. Aguarde alguns segundos e tente de novo."
+        : extrairMensagemErro(dados);
+
+    const erro = new Error(mensagem);
     erro.status = resposta.status;
     throw erro;
   }

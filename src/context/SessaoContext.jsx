@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
 
 import {
+  api,
   limparSessao,
   obterUsuarioSessao,
   salvarSessao,
@@ -19,9 +20,17 @@ export function SessaoProvider({ children }) {
     setUsuario(novoUsuario);
   }, []);
 
-  const sair = useCallback(() => {
-    limparSessao();
-    setUsuario(null);
+  const sair = useCallback(async () => {
+    try {
+      if (tokenAuth()) {
+        await api("/auth/logout", { metodo: "POST" });
+      }
+    } catch {
+      // A sessao local deve ser encerrada mesmo se a API estiver indisponivel.
+    } finally {
+      limparSessao();
+      setUsuario(null);
+    }
   }, []);
 
   const valor = useMemo(
